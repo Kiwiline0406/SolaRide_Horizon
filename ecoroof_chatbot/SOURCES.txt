@@ -1,0 +1,6 @@
+pyproject.toml
+ecoroof_project.egg-info/PKG-INFO
+ecoroof_project.egg-info/SOURCES.txt
+ecoroof_project.egg-info/dependency_links.txt
+ecoroof_project.egg-info/requires.txt
+ecoroof_project.egg-info/top_level.txt
