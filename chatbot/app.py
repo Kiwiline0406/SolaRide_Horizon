@@ -32,7 +32,7 @@ st.set_page_config(page_title="Chatbot Énergie & Mobilité Douce", page_icon="�
 st.title("♻️ Expert Photovoltaïque et Pistes Cyclables")
 
 # Afficher l’avatar expert
-st.image("https://sdmntpraustraliaeast.oaiusercontent.com/files/00000000-aff8-61fa-b471-eab921830982/raw?se=2025-07-03T15%3A48%3A25Z&sp=r&sv=2024-08-04&sr=b&scid=bae88f23-821d-50ba-9075-052e6f75aea1&skoid=a3412ad4-1a13-47ce-91a5-c07730964f35&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-02T22%3A54%3A31Z&ske=2025-07-03T22%3A54%3A31Z&sks=b&skv=2024-08-04&sig=VClvf2NXE70bUqUHH1M%2BhT8Lb%2BVeL%2BqlvdQ6X5EvrsQ%3D", width=120)
+st.image("C:/Users/pujad\OneDrive - APS Consult/Documents/FORMATION/Wild Code School/Projet 3/SolaRide Horizon/chatbot/ChatGPT Image 3 juil. 2025, 17_03_12.png", width=120)
 
 # ✅ INTRO visible pour l’utilisateur
 with st.container():
