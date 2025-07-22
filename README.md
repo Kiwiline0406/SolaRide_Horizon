@@ -1,4 +1,4 @@
-# EcoRoof_Project
+# SolaRide Horizon
 
 Sujet initial du Projet:
 
