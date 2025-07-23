@@ -1,0 +1,100 @@
+   body {
+            background-color: #fcfdfa !important;
+            color: #0d2c03;
+        }
+        .stApp {
+            background-color: #fcfdfa;
+        }
+
+        .navbar {
+            background-color: #3bc599;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #0d2c03;
+            font-family: 'Helvetica Neue', sans-serif;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .custom-paragraph {
+            color: #0d2c03;
+        }
+
+        .hero {
+            background-color: #fcfdfa;
+            padding: 4rem 2rem;
+            text-align: left;
+            color: #123d04;
+            font-family: 'Helvetica Neue', sans-serif;
+        }
+
+        .hero-title {
+            color: #123d04;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .stTextInput > div > div > input {
+            width: 100%; /* Make Streamlit input fill its container */
+            padding: 1rem;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            background-color: #6c8164; /* Darker background for input */
+            color: #0d2c03;
+        }
+        .stSelectbox > div > div > div {
+            background-color: #6c8164;
+            color: #0d2c03;
+        }
+        .stSelectbox > div > div > div > div[data-baseweb="select"] {
+            background-color: #6c8164;
+            color: #0d2c03;
+        }
+        .stSelectbox > div > div > div > div[role="listbox"] {
+            background-color: #6c8164;
+            color: #0d2c03;
+        }
+        .stSelectbox > div > div > div > div[role="option"] {
+            color: #0d2c03;
+        }
+
+                /* Style des onglets */
+        .stTabs [data-baseweb="tab"] {
+            font-size: 18px;
+            font-weight: normal;
+            color: #0d2c03;
+            min-width: 150px;
+            flex: 1;
+            justify-content: center;
+        }
+
+                /* Onglet actif */
+        .stTabs [data-baseweb="tab"][aria-selected="true"] {
+            font-size: 20px;
+            font-weight: bold;
+            color: #169b94 !important;
+        }
+
+            /* Barre sous l'onglet actif */
+        .stTabs [data-baseweb="tab-highlight"] {
+            background-color: #169b94;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Cible tous les labels d’onglets dans la sidebar */
+        section[data-testid="stSidebar"] span[label] {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0d2c03;
+    }
