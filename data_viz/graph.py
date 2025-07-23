@@ -16,7 +16,7 @@ st.title("Analyses descriptives des données collectées")
 
 st.markdown("<br><br>", unsafe_allow_html=True)  # espace vertical
 
-df = pd.read_csv("C:/Users/pujad/OneDrive - APS Consult/Documents/FORMATION/Wild Code School/Projet 3/df_analysesFinal.csv", sep=';')
+df = pd.read_csv("C:/Users/pujad/OneDrive - APS Consult/Documents/FORMATION/Wild Code School/Projet 3/df_analysesFinal.csv", sep=',')
 df.rename(columns = {'Nom_x':'Dénomination AF3V'},inplace=True)
 df.rename(columns = {'Eclairage urbain en Nbre lapamdaires alimentés/an':'Eclairage urbain en Nbre lampadaires alimentés/an'},inplace=True)
 
@@ -150,10 +150,10 @@ st.markdown(" ##### ⚡️ Production solaire pour la France avec équivalents d
 
 e,f= st.columns(2)
 g,h = st.columns(2)
-e.metric("🔋  Production totale ", format_number(prod_total) + " kWh",border=True)
-f.metric("💡  Éclairage public LED ", format_number(heures_eclairage) + " lampadaires",border=True,)
-g.metric("🚎 Km en BlueBus de 12m ", format_number(km_bus) + " km",border=True)
-h.metric("🚲  Charges de VAE ", format_number(charges_velo) + " charges",border=True)
+e.metric("🔋  Production totale ", format_number(prod_total) + " kWh"," Conso annuelle moyenne de 9 786 Français en 2024",border=True)
+f.metric("💡  Éclairage public LED ", format_number(heures_eclairage) + " lampadaires","3% du parc Français LED (3.6 M) en 2024",border=True,)
+g.metric("🚎 Km en BlueBus de 12m ", format_number(km_bus) + " km", "390 501 kg CO2e ou baisse de 81% des émissions par rapport à un bus thermique",border=True)
+h.metric("🚲  Charges de VAE ", format_number(charges_velo) + " charges"," Equivalent 2.8M € en prix revente (production totale à un taux Enedis de 0.13 en 2024)",border=True )
 
 st.markdown("<br><br>", unsafe_allow_html=True)  # espace vertical
 
@@ -313,7 +313,7 @@ fig = px.bar(
 
 # Injecter les données personnalisées pour le hover uniquement
 fig.update_traces(
-    customdata=df_top_prod[['Voie_ID', 'Région', '💡Lampadaires alimentés', '🚎 km en BlueBus ', '🚲 nbre charge VAE']],
+    customdata=df_top_prod[['Voie_ID', 'Région','🔋Production kWh/an','💡Lampadaires alimentés', '🚎 km en BlueBus ', '🚲 nbre charge VAE']],
     hovertemplate=
         "<b>ID :</b> %{customdata[0]}<br>" +
         "<b>Région :</b> %{customdata[1]}<br>" +
@@ -343,17 +343,17 @@ st.plotly_chart(fig, use_container_width=True)
 st.markdown("<br><br>", unsafe_allow_html=True)  # espace vertical
 st.markdown(" ### 👎 20 voies vertes les moins productives 🪫")
 
-df_top_prod=df.nsmallest(20,'Énergie produite annuelle (kWh / m2 de panneau)').copy()
-df_top_prod = df_top_prod.sort_values('Énergie produite annuelle (kWh / m2 de panneau)', ascending=True)
+df_bott_prod=df.nsmallest(20,'Énergie produite annuelle (kWh / m2 de panneau)').copy()
+df_bott_prod = df_bott_prod.sort_values('Énergie produite annuelle (kWh / m2 de panneau)', ascending=True)
 # Ajouter les colonnes nécessaires dans customdata
-df_top_prod['🪫Production kWh/an'] = df_top_prod["Production pour 860m2 de panneau (kWh)"]
-df_top_prod['💡Lampadaires alimentés'] = df_top_prod["Eclairage urbain en Nbre lampadaires alimentés/an"]
-df_top_prod['🚎 km en BlueBus '] = df_top_prod["nbre annuel km/BlueBus _12m"]
-df_top_prod['🚲 nbre charge VAE'] = df_top_prod["nbre annuel de charges velos"]
+df_bott_prod['🪫Production kWh/an'] = df_bott_prod["Production pour 860m2 de panneau (kWh)"]
+df_bott_prod['💡Lampadaires alimentés'] = df_bott_prod["Eclairage urbain en Nbre lampadaires alimentés/an"]
+df_bott_prod['🚎 km en BlueBus '] = df_bott_prod["nbre annuel km/BlueBus _12m"]
+df_bott_prod['🚲 nbre charge VAE'] = df_bott_prod["nbre annuel de charges velos"]
 
 # Création du graphique
 fig = px.bar(
-    df_top_prod,
+    df_bott_prod,
     x='Énergie produite annuelle (kWh / m2 de panneau)',
     y='Dénomination AF3V',
     orientation='h',
@@ -368,19 +368,20 @@ fig = px.bar(
 
 # Injecter les données personnalisées pour le hover uniquement
 fig.update_traces(
-    customdata=df_top_prod[['Voie_ID', 'Région', '💡Lampadaires alimentés', '🚎 km en BlueBus ', '🚲 nbre charge VAE']],
+    customdata=df_bott_prod[['Voie_ID', 'Région','🪫Production kWh/an','💡Lampadaires alimentés', '🚎 km en BlueBus ', '🚲 nbre charge VAE']],
     hovertemplate=
         "<b>ID :</b> %{customdata[0]}<br>" +
         "<b>Région :</b> %{customdata[1]}<br>" +
-        "🪫Production kWh/an : %{customdata[2]}<br>" +
+        "🪫Production kWh/an: %{customdata[2]}<br>" +
         "💡 Lampadaires alimentés : %{customdata[3]}<br>" +
         "🚎 km en BlueBus : %{customdata[4]}<br>" +
         "🚲 nbre charge VAE : %{customdata[5]}<br><extra></extra>"
+    
 )
       
 # Optionnel : Affichage du texte sur les barres
 fig.update_traces(
-    text=df_top_prod['Énergie produite annuelle (kWh / m2 de panneau)'].round(2),
+    text=df_bott_prod['Énergie produite annuelle (kWh / m2 de panneau)'].round(2),
     textposition='outside'
 )
 
@@ -399,13 +400,49 @@ st.plotly_chart(fig, use_container_width=True)
     # WHAT ELSE ???????????????? #
     ##############################
 st.markdown("<br><br>", unsafe_allow_html=True)  # espace vertical
-st.markdown(" ### :four: Bar Rounded Graph par région pour le GHI moyen et l'ensoleillement ")
+st.markdown(" ### :four: Répartition du SolarScore des voies vertes par région")
+col1,col2,col3,col4 = st.columns(4)
+with col4:
+    st.image("C:/Users/pujad/OneDrive - APS Consult/Documents/FORMATION/Wild Code School/Projet 3/SolaRide Horizon/data_viz/Échelle de notation SolarScore.png", width=140)
 
+# Assurons-nous que la colonne Score est bien catégorique et ordonnée
+df1["SolarScore"] = pd.Categorical(df1["SolarScore"], categories=["A", "B", "C", "D", "E"], ordered=True)
 
+# Grouper le nombre de voies vertes par Région et Score
+df_score_region = df1.groupby(['Région', 'SolarScore'], observed=True).size().reset_index(name='Nombre de voies')
 
+# Palette personnalisée
+custom_colors = {
+    "A": "#0a8d50",   
+    "B": "#12bb5e",   
+    "C": "#f3db52",   
+    "D": "#f7b12f",   
+    "E": "#f87f2f"    
+}
 
+fig = px.bar(
+    df_score_region,
+    x="Région",
+    y="Nombre de voies",
+    color="SolarScore",
+    category_orders={"SolarScore": ["A", "B", "C", "D", "E"]},
+    color_discrete_map=custom_colors,
+    labels={"Nombre de voies": "Nombre de voies vertes"},
+    
+)
 
+# Mise en forme du layout
+fig.update_layout(
+    barmode="stack",
+    height=600,
+    margin=dict(l=60, r=40, t=60, b=100),
+    font=dict(family="Helvetica", size=14),
+    xaxis_tickangle=-45,
+    legend_title_text="SolarScore",
+    showlegend=False,
+)
 
+st.plotly_chart(fig, use_container_width=True, key="barres_empilées_scores")
 
 
 
