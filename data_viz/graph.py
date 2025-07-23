@@ -7,10 +7,6 @@ import json
 import geopandas as gpd
 
 
-
-
-
-
     ##########################
     # AFFICHAGE du DATAFRAME #   
     ##########################
@@ -20,7 +16,7 @@ st.title("Analyses descriptives des données collectées")
 
 st.markdown("<br><br>", unsafe_allow_html=True)  # espace vertical
 
-df = pd.read_csv('C:/Users/pujad/OneDrive - APS Consult/Documents/FORMATION/Wild Code School/Projet 3/SolaRide Horizon/data_viz/df_analysesFinal.csv')
+df = pd.read_csv("C:/Users/pujad/OneDrive - APS Consult/Documents/FORMATION/Wild Code School/Projet 3/df_analysesFinal.csv", sep=';')
 df.rename(columns = {'Nom_x':'Dénomination AF3V'},inplace=True)
 df.rename(columns = {'Eclairage urbain en Nbre lapamdaires alimentés/an':'Eclairage urbain en Nbre lampadaires alimentés/an'},inplace=True)
 
@@ -403,7 +399,7 @@ st.plotly_chart(fig, use_container_width=True)
     # WHAT ELSE ???????????????? #
     ##############################
 st.markdown("<br><br>", unsafe_allow_html=True)  # espace vertical
-st.markdown(" ### :four: Bar Rounded Graph pour température moyenne, ensoleillement moyen, ghi moyen/jour/région")
+st.markdown(" ### :four: Bar Rounded Graph par région pour le GHI moyen et l'ensoleillement ")
 
 
 
