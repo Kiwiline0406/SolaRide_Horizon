@@ -8,6 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
-.streamlit
+.streamlit/secrets.toml
 
-.cache.sqlite
+*.sqlite
