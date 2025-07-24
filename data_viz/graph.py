@@ -396,9 +396,11 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 
-    ##############################
-    # WHAT ELSE ???????????????? #
-    ##############################
+    ##############
+    # SolarScore #
+    ##############
+
+    
 st.markdown("<br><br>", unsafe_allow_html=True)  # espace vertical
 st.markdown(" ### :four: Répartition du SolarScore des voies vertes par région")
 col1,col2,col3,col4 = st.columns(4)
