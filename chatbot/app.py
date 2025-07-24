@@ -3,10 +3,18 @@ import requests
 import pandas as pd
 
 
-
 # 📌 Configuration Streamlit
 st.set_page_config(page_title="Chatbot Énergie & Mobilité Douce", page_icon="🌞")
 st.title("♻️ Expert Photovoltaïque et Pistes Cyclables")
+
+# 🧠 Initialisation mémoire (avant toute utilisation)
+if "qa_data" not in st.session_state:
+    st.session_state.qa_data = []
+
+# Bouton pour réinitialiser l'historique
+if st.button("🗑️ Réinitialiser l'historique"):
+    st.session_state.qa_data = []
+    st.experimental_rerun()
 
 # 👤 Avatar expert
 st.image("C:/Users/pujad/OneDrive - APS Consult/Documents/FORMATION/Wild Code School/Projet 3/SolaRide Horizon/chatbot/ChatGPT Image 3 juil. 2025, 17_03_12.png", width=120)
@@ -26,9 +34,40 @@ Ce bot est spécialisé en :
 - "Comment intégrer une voie verte dans un projet rural ?"
 """)
 
-# 🧠 Initialisation mémoire
-if "qa_data" not in st.session_state:
-    st.session_state.qa_data = []
+# 📚 Historique (FAQ interactive)
+if st.session_state.qa_data:
+    st.markdown("## 📚 Historique (FAQ interactive)")
+    df = pd.DataFrame(st.session_state.qa_data)
+
+    # 🎯 Filtrage par thème
+    selected_theme = st.selectbox("🔎 Filtrer par thème :", ["Tous"] + sorted(df["Thème"].unique()))
+    if selected_theme != "Tous":
+        df = df[df["Thème"] == selected_theme]
+
+    # 🔍 Affichage sous forme d'expander scrollable
+    st.markdown("### 🔍 Questions & Réponses")
+    for i, row in df.iterrows():
+        with st.expander(f"❓ {row['Question']}"):
+            st.markdown(f"""
+                <div style="
+                    background-color: #f9f9f9;
+                    padding: 15px;
+                    border-radius: 8px;
+                    border: 1px solid #ddd;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 16px;
+                    line-height: 1.6;
+                    max-height: 300px;
+                    overflow-y: auto;
+                    white-space: pre-wrap;
+                ">
+                    {row['Réponse'].replace("\n", "<br>")}
+                </div>
+            """, unsafe_allow_html=True)
+
+    # 📥 Bouton de téléchargement
+    csv = df.to_csv(index=False)
+    st.download_button("📥 Télécharger l'historique (.csv)", data=csv, file_name="faq_chatbot.csv", mime="text/csv")
 
 # 🗂️ Choix du thème avant la question
 theme = st.selectbox("📂 Choisis le thème de ta question :", ["Énergie photovoltaïque", "Mobilité douce", "Autre"])
@@ -80,38 +119,3 @@ if user_input:
             "Réponse": assistant_reply,
             "Thème": theme
         })
-
-# 📚 Historique (FAQ interactive)
-if st.session_state.qa_data:
-    st.markdown("## 📚 Historique (FAQ interactive)")
-    df = pd.DataFrame(st.session_state.qa_data)
-
-    # 🎯 Filtrage par thème
-    selected_theme = st.selectbox("🔎 Filtrer par thème :", ["Tous"] + sorted(df["Thème"].unique()))
-    if selected_theme != "Tous":
-        df = df[df["Thème"] == selected_theme]
-
-    # 🔍 Affichage sous forme d'expander scrollable
-    st.markdown("### 🔍 Questions & Réponses")
-    for i, row in df.iterrows():
-        with st.expander(f"❓ {row['Question']}"):
-            st.markdown(f"""
-                <div style="
-                    background-color: #f9f9f9;
-                    padding: 15px;
-                    border-radius: 8px;
-                    border: 1px solid #ddd;
-                    font-family: 'Segoe UI', sans-serif;
-                    font-size: 16px;
-                    line-height: 1.6;
-                    max-height: 300px;
-                    overflow-y: auto;
-                    white-space: pre-wrap;
-                ">
-                    {row['Réponse'].replace("\n", "<br>")}
-                </div>
-            """, unsafe_allow_html=True)
-
-    # 📥 Bouton de téléchargement
-    csv = df.to_csv(index=False)
-    st.download_button("📥 Télécharger l'historique (.csv)", data=csv, file_name="faq_chatbot.csv", mime="text/csv")
