@@ -5,4 +5,5 @@ df = pd.read_csv('df_analysesFinal.csv')
 
 # Afficher les premières lignes pour vérifier le chargement
 print(df.head())
+# Afficher les informations générales du DataFrame
 
