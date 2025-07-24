@@ -1,2 +1,7 @@
 streamlit
 altair
+pandas as 
+matplotlib.pyplot
+plotly.express
+json
+geopandas
