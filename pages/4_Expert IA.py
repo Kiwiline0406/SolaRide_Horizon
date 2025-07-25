@@ -19,7 +19,7 @@ if "qa_data" not in st.session_state:
     st.session_state.qa_data = []
 
 # 👤 Avatar expert
-st.image("C:/Users/pujad/OneDrive - APS Consult/Documents/FORMATION/Wild Code School/Projet 3/SolaRide Horizon/chatbot/ChatGPT Image 3 juil. 2025, 17_03_12.png", width=120)
+st.image("images/chatbot.png", width=120)
 
 # 📘 Introduction
 with st.container():
