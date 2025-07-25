@@ -65,7 +65,7 @@ with tab1:
             #         ONGLET 2
             # ---------------------- #
 
-with tab3:
+with tab2:
 
     st.markdown("""
         ## Les Méthodologies
@@ -99,7 +99,7 @@ with tab3:
             #         ONGLET 4
             # ---------------------- #
 
-with tab4:
+with tab3:
     st.markdown("""
         ## L'équipe
 """, unsafe_allow_html=True)
