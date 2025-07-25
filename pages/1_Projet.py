@@ -74,7 +74,7 @@ with tab1:
 
 with tab2:
     st.markdown("""
-        <div class="hero-title">Les livrables</div>
+        ##Les livrables
 """, unsafe_allow_html=True)
     
     st.markdown(""" 
@@ -86,7 +86,7 @@ with tab2:
 
 with tab3:
     st.markdown("""
-        <div class="hero-title">Les Technologies</div>
+        ##Les Technologies
 """, unsafe_allow_html=True)
 
     st.markdown(""" 
@@ -108,7 +108,7 @@ with tab3:
 
 with tab4:
     st.markdown("""
-        <div class="hero-title">L'équipe</div>
+        ##L'équipe
 """, unsafe_allow_html=True)
 
     st.markdown(""" 
@@ -143,7 +143,7 @@ with tab4:
 
 with tab5:
     st.markdown("""
-        <div class="hero-title">Les liens utiles</div>
+        ##Les liens utiles
 """, unsafe_allow_html = True)
     
     st.markdown("[Potentiel s(c)olaire] (https://dataforgood.fr/projects/potentielscolaire)", unsafe_allow_html=True)
