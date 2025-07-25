@@ -23,7 +23,7 @@ if "qa_data" not in st.session_state:
     #st.experimental_rerun()
 
 # 👤 Avatar expert
-#st.image("images/chatbot.png", width=120)
+st.image("images/chatbot.png", width=120)
 
 # 📘 Introduction
 with st.container():
