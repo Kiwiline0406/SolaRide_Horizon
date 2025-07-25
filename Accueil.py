@@ -13,7 +13,7 @@ with st.spinner("Chargement en cours de l'application..."):
     st.markdown(
     """
     <div style="text-align: center;">
-        <img src="images/ton_image.png" width="600">
+        <img src="images/logo_3.png" width="600">
     </div>
     """,
     unsafe_allow_html=True)
