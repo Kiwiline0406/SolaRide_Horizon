@@ -21,7 +21,7 @@ st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 # --- Logo centré ---
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    st.image("images/logo_3_bandeau.png", width=500)
+    st.image("images/logo_3.png", width=500)
 st.write("---")
 
 # --- Accueil ---
