@@ -486,7 +486,9 @@ def predict_solar_weather_m12(lat, lon):
             hourly_dataframe = pd.DataFrame(data=hourly_data)
 
             # Ajout des colonnes temporelles
-            hourly_dataframe['month'] = hourly_dataframe['date'].dt.month_name(locale='English')
+            english_months = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December']
+            hourly_dataframe['month'] = hourly_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
             hourly_dataframe['month_num'] = hourly_dataframe['date'].dt.month
             hourly_dataframe['year'] = hourly_dataframe['date'].dt.year
             hourly_dataframe = hourly_dataframe.iloc[2:]  # Supprimer les 2 premières valeurs erratiques
@@ -518,7 +520,7 @@ def predict_solar_weather_m12(lat, lon):
             daily_dataframe = daily_dataframe.iloc[1:]
 
             # Ajout des colonnes temporelles
-            daily_dataframe['month'] = daily_dataframe['date'].dt.month_name(locale='English')
+            daily_dataframe['month'] = daily_dataframe['date'].dt.month.month.apply(lambda x: english_months[x-1])
             daily_dataframe['month_num'] = daily_dataframe['date'].dt.month
             daily_dataframe['year'] = daily_dataframe['date'].dt.year
             daily_dataframe['days_in_month'] = daily_dataframe['date'].dt.daysinmonth
