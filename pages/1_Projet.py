@@ -28,7 +28,9 @@ st.write("---")
 
 st.markdown(""" </br>
                 <p class="custom-paragraph"></br>
-                <p class="custom-paragraph">Dans le cadre de notre formation de Data Analyst à la Wild Code School, nous avons l'opportunité de réaliser un projet avec un sujet libre. Découvrez ci-dessous l'histoire de ce projet.</p>
+                <p class="custom-paragraph">Dans le cadre de notre formation de Data Analyst à la Wild Code School, nous avons eu l'opportunité de mener un projet sur un sujet libre.
+Ce projet nous a permis d’explorer une problématique de notre choix, de collecter et d’analyser des données pertinentes, et de mettre en pratique les compétences acquises tout au long de notre formation.
+Découvrez ci-dessous l’histoire et les objectifs de ce projet.</p>
             """, unsafe_allow_html=True)
                
 
