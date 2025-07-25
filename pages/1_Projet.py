@@ -104,10 +104,6 @@ with tab3:
         ## L'équipe
 """, unsafe_allow_html=True)
 
-    st.markdown(""" 
-                    <p class="custom-paragraph">TEXTE A AJOUTER</p>
-    """, unsafe_allow_html=True)
-
     col1, col2, col3 = st.columns([1, 1, 1])
 
     with col1:
