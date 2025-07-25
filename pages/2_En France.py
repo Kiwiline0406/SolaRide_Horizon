@@ -279,7 +279,7 @@ def solar_info_annuel(coord_tuple):
     lon, lat = map(float, coord_string.split(','))
 
     # Délai de 1-2 secondes entre chaque requête
-    time.sleep(1)
+    time.sleep(0.5)
     
     # Setup the Open-Meteo API client with cache and retry on error
     cache_session = requests_cache.CachedSession('.cache', expire_after = -1)
