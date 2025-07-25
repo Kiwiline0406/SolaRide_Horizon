@@ -39,7 +39,7 @@ Découvrez ci-dessous l’histoire et les objectifs de ce projet.</p>
 # ------------------------------------------------------------------------------------------------------------------------ #
 
 # Création de 5 onglets
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Inspirations", "Livrables", "Sources des données", "L'équipe", "Liens utiles"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Contexte", "Livrables", "Sources des données", "L'équipe", "Liens utiles"])
 
             # ---------------------- #
             #         ONGLET 1 
@@ -50,7 +50,12 @@ with tab1:
 
 
     st.markdown(""" 
-                    <p class="custom-paragraph">TEXTE A AJOUTER</p>
+                    <p class="custom-paragraph">SolaRide Horizon est une application de data analyse développée 
+                pour estimer le potentiel photovoltaïque des pistes cyclables (voies vertes) en France. 
+                En nous appuyant sur des initiatives pionnières comme celle de Genève, notre projet vise à :
+
+                - Réduire la dépendance énergétique aux sources non renouvelables
+                - Révéler le potentiel énergétique des infrastructures existantes et inexploitées</p>
     """, unsafe_allow_html=True)
 
 
