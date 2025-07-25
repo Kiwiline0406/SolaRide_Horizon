@@ -68,7 +68,7 @@ with tab1:
 with tab2:
 
     st.markdown("""
-        ## 🔄 Les Méthodologies
+        ## 🔄 La Méthodologie
 """, unsafe_allow_html=True)
     
     st.markdown("""Nous avons suivi une approche itérative sur **7 semaines**, avec un focus collaboratif :
