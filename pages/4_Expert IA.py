@@ -18,6 +18,11 @@ st.write("---")
 if "qa_data" not in st.session_state:
     st.session_state.qa_data = []
 
+# Bouton pour réinitialiser l'historique
+#if st.button("🗑️ Réinitialiser l'historique"):
+    #st.session_state.qa_data = []
+    #st.experimental_rerun()
+
 # 👤 Avatar expert
 st.image("images/chatbot.png", width=120)
 
