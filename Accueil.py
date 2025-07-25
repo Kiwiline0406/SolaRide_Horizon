@@ -10,9 +10,13 @@ st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 with st.spinner("Chargement en cours de l'application..."):
     time.sleep(2)  # Simule un traitement long
     # --- Logo ou bannière ---
-    col1, col2, col3 = st.columns([1,2,1])
-    with col2:
-        st.image("images/logo_3.png",  width=600)
+    st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="images/ton_image.png" width="600">
+    </div>
+    """,
+    unsafe_allow_html=True)
 
     # --- Titre principal ---
     st.markdown("<h1 style='text-align: center; color: #0d2c03; margin-top: -20px;'>Bienvenue sur SolaRide Horizon</h1>", unsafe_allow_html=True)
