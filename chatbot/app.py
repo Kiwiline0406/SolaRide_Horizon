@@ -12,9 +12,9 @@ if "qa_data" not in st.session_state:
     st.session_state.qa_data = []
 
 # Bouton pour réinitialiser l'historique
-if st.button("🗑️ Réinitialiser l'historique"):
-    st.session_state.qa_data = []
-    st.experimental_rerun()
+#if st.button("🗑️ Réinitialiser l'historique"):
+    #st.session_state.qa_data = []
+    #st.experimental_rerun()
 
 # 👤 Avatar expert
 st.image("C:/Users/pujad/OneDrive - APS Consult/Documents/FORMATION/Wild Code School/Projet 3/SolaRide Horizon/chatbot/ChatGPT Image 3 juil. 2025, 17_03_12.png", width=120)
