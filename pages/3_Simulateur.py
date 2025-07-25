@@ -520,7 +520,7 @@ def predict_solar_weather_m12(lat, lon):
             daily_dataframe = daily_dataframe.iloc[1:]
 
             # Ajout des colonnes temporelles
-            daily_dataframe['month'] = daily_dataframe['date'].dt.month.month.apply(lambda x: english_months[x-1])
+            daily_dataframe['month'] = daily_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
             daily_dataframe['month_num'] = daily_dataframe['date'].dt.month
             daily_dataframe['year'] = daily_dataframe['date'].dt.year
             daily_dataframe['days_in_month'] = daily_dataframe['date'].dt.daysinmonth
