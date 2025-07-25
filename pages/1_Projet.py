@@ -101,7 +101,7 @@ with tab2:
 
 with tab3:
     st.markdown("""
-        ## L'équipe
+        ## 🤝 L'équipe
 """, unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns([1, 1, 1])
