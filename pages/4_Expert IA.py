@@ -9,8 +9,7 @@ import pandas as pd
 
 st.markdown(
     "<h1 style='text-align: center;'>♻️ Expert Photovoltaïque et Pistes Cyclables</h1>",
-    unsafe_allow_html=True
-)
+    unsafe_allow_html=True)
 
 st.write("---")
 
@@ -55,6 +54,7 @@ if st.session_state.qa_data:
     st.markdown("### 🔍 Questions & Réponses")
     for i, row in df.iterrows():
         with st.expander(f"❓ {row['Question']}"):
+            reponse_html = row["Réponse"].replace("\n", "<br>")
             st.markdown(f"""
                 <div style="
                     background-color: #f9f9f9;
@@ -68,7 +68,7 @@ if st.session_state.qa_data:
                     overflow-y: auto;
                     white-space: pre-wrap;
                 ">
-                    {row['Réponse'].replace("\n", "<br>")}
+                    {reponse_html}
                 </div>
             """, unsafe_allow_html=True)
 
