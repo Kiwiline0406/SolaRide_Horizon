@@ -39,7 +39,7 @@ Découvrez ci-dessous l’histoire et les objectifs de ce projet.</p>
 # ------------------------------------------------------------------------------------------------------------------------ #
 
 # Création de 5 onglets
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Contexte", "Livrables", "Sources des données", "L'équipe", "Liens utiles"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Contexte", "Livrables", "Technologies", "L'équipe", "Liens utiles"])
 
             # ---------------------- #
             #         ONGLET 1 
@@ -77,12 +77,21 @@ with tab2:
 
 with tab3:
     st.markdown("""
-        <div class="hero-title">Les sources</div>
+        <div class="hero-title">Les Technologies</div>
 """, unsafe_allow_html=True)
 
     st.markdown(""" 
-                    <p class="custom-paragraph">TEXTE A AJOUTER</p>
-    """, unsafe_allow_html=True)
+                | Technologie       | Usage                                         |
+|-------------------|-----------------------------------------------|
+| **Python**        | Web scraping, transformation, API, GeoPandas  |
+| **Pandas**        | Traitement et agrégation des données          |
+| **Plotly.express**| Visualisations                                |
+| **Streamlit**     | Application interactive et visualisation      |
+| **Open-Meteo API**| Données météo historiques                     |
+| **Folium**        | Cartographie interactive                      |
+| **Scikit-learn**  | Prémices d'intégration IA (prédictions)       |
+| **OpenAI**        | Intégration d'un LLM pour le ChatBot          |
+                """)
     
             # ---------------------- #
             #         ONGLET 4
