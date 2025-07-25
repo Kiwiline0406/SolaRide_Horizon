@@ -131,9 +131,6 @@ with tab3:
             # ---------------------- #
 
 with tab4:
-    st.markdown("""
-        ## Les Données
-""", unsafe_allow_html = True)
     
     st.markdown("""
     ## 🔍 Données utilisées
