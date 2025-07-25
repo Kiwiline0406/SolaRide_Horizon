@@ -192,7 +192,7 @@ def solar_info_mensuel_popup(coords):
 
     daily_dataframe = daily_dataframe.iloc[1:]
 
-    daily_dataframe['month'] = daily_dataframe['date'].dt.month_name(locale='English')
+    daily_dataframe['month'] = daily_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
     daily_dataframe['month_num'] = daily_dataframe['date'].dt.month
     daily_dataframe['days_in_month'] = daily_dataframe['date'].dt.daysinmonth
 
