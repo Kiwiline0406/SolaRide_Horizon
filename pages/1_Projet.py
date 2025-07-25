@@ -132,10 +132,16 @@ with tab3:
 
 with tab4:
     st.markdown("""
-        ## Les liens utiles
+        ## Les Données
 """, unsafe_allow_html = True)
     
-    st.markdown("[Potentiel s(c)olaire] (https://dataforgood.fr/projects/potentielscolaire)", unsafe_allow_html=True)
+    st.markdown("""
+    ## 🔍 Données utilisées
 
-    st.markdown("[Article de presse du projet Solar Horizon] (https://ww2.sig-ge.ch/actualites/sig-et-letat-de-geneve-devoilent-la-premiere-piste-cyclable-solaire-de-suisse)", unsafe_allow_html=True)
-   
+    - **Voies vertes en France (AF3V)** : [https://www.af3v.org/](https://www.af3v.org/)
+    - **Modèle solaire suisse (SIG Genève)** :  
+    - Piste cyclable solaire (SIG) : [https://solarchitecture.ch/fr/la-premiere-piste-cyclable-solaire-de-suisse/](https://solarchitecture.ch/fr/la-premiere-piste-cyclable-solaire-de-suisse/)
+    - Modèle détaillé Solarchitecture.ch : [https://ww2.sig-ge.ch/actualites/sig-et-letat-de-geneve-devoilent-la-premiere-piste-cyclable-solaire-de-suisse](https://ww2.sig-ge.ch/actualites/sig-et-letat-de-geneve-devoilent-la-premiere-piste-cyclable-solaire-de-suisse)
+    - **Météo historique** : Open-Meteo API
+    - **Modélisation énergétique** : Rendement basé sur 860 m² de panneaux bifaciaux
+    """)
