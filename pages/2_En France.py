@@ -33,7 +33,7 @@ with open('style.css') as c:
 st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
 st.markdown(
-    "<h1 style='text-align: center;'>Nos Voies Vertes Françaises</h1>",
+    "<h1 style='text-align: center;'>Voies Vertes Françaises</h1>",
     unsafe_allow_html=True
 )
 st.write("---")
