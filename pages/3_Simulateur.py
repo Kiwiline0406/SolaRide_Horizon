@@ -153,7 +153,10 @@ def solar_info_mensuel_popup(coords):
 
 
     # Nettoyage pour exploitation des données du df Hourly
-    hourly_dataframe['month'] = hourly_dataframe['date'].dt.month_name(locale='English')
+    english_months = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December']
+
+    hourly_dataframe['month'] = hourly_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
     hourly_dataframe['month_num'] = hourly_dataframe['date'].dt.month
 
     hourly_dataframe = hourly_dataframe.iloc[2:]
