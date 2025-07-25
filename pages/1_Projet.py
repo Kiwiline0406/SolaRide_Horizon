@@ -49,14 +49,23 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["Contexte", "Livrables", "Technologies",
 with tab1:
 
 
-    st.markdown(""" 
-                    <p class="custom-paragraph">SolaRide Horizon est une application de data analyse développée 
-                pour estimer le potentiel photovoltaïque des pistes cyclables (voies vertes) en France. 
-                En nous appuyant sur des initiatives pionnières comme celle de Genève, notre projet vise à :
+   st.markdown("""
+        ## 🧭 Contexte
 
-                - Réduire la dépendance énergétique aux sources non renouvelables
-                - Révéler le potentiel énergétique des infrastructures existantes et inexploitées</p>
-    """, unsafe_allow_html=True)
+        SolaRide Horizon est une application de data analyse développée pour estimer le potentiel photovoltaïque des pistes cyclables (voies vertes) en France. En nous appuyant sur des initiatives pionnières comme celle de Genève, notre projet vise à :
+
+        - Réduire la dépendance énergétique aux sources non renouvelables  
+        - Révéler le potentiel énergétique des infrastructures existantes et inexploitées
+
+        ## 🧪 Objectifs du projet
+
+        | Aspect | Description |
+        |--------|-------------|
+        | 🎯 **Sujet initial** | Potentiel bio-solaire des surfaces cyclables pour produire de l'énergie |
+        | 🔄 **Révision du sujet** | Estimation du rendement solaire basé sur les données AF3V + météo |
+        | 🧠 **Inspiration** | Projet suisse à Genève + projet "Potentiel Scolaire" de Data For Good |
+        | 🛠️ **Objectif technique** | Créer une application de A à Z avec données, visualisations et ChatBot IA |
+        """, unsafe_allow_html=True)
 
 
             # ---------------------- #
