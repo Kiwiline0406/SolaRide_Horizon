@@ -319,7 +319,10 @@ def solar_info_annuel(coord_tuple):
 
 
     # Nettoyage pour exploitation des données du df Hourly
-    hourly_dataframe['month'] = hourly_dataframe['date'].dt.month_name(locale='English')
+    english_months = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December']
+
+    hourly_dataframe['month'] = hourly_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
     hourly_dataframe['month_num'] = hourly_dataframe['date'].dt.month
 
     hourly_dataframe = hourly_dataframe.iloc[2:]
@@ -355,7 +358,7 @@ def solar_info_annuel(coord_tuple):
 
     daily_dataframe = daily_dataframe.iloc[1:]
 
-    daily_dataframe['month'] = daily_dataframe['date'].dt.month_name(locale='English')
+    daily_dataframe['month'] = daily_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
     daily_dataframe['month_num'] = daily_dataframe['date'].dt.month
     daily_dataframe['days_in_month'] = daily_dataframe['date'].dt.daysinmonth
 
