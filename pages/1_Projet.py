@@ -32,7 +32,7 @@ Découvrez ci-dessous l’histoire et les objectifs de ce projet.</p>
 # ------------------------------------------------------------------------------------------------------------------------ #
 
 # Création de 5 onglets
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Contexte", "Livrables", "Technologies", "L'équipe", "Liens utiles"])
+tab1, tab2, tab3, tab4 = st.tabs(["Contexte", "Méthodologie / Technologies", "L'équipe", "Liens utiles"])
 
             # ---------------------- #
             #         ONGLET 1 
@@ -62,22 +62,22 @@ with tab1:
 
 
             # ---------------------- #
-            #         ONGLET 2 
-            # ---------------------- #
-
-with tab2:
-    st.markdown("""
-        ## Les livrables
-""", unsafe_allow_html=True)
-    
-    st.markdown(""" 
-                <p class="custom-paragraph">TEXTE A AJOUTER</p>
-""", unsafe_allow_html=True)
-            # ---------------------- #
-            #         ONGLET 3
+            #         ONGLET 2
             # ---------------------- #
 
 with tab3:
+
+    st.markdown("""
+        ## Les Méthodologies
+""", unsafe_allow_html=True)
+    
+    st.markdown("""Nous avons suivi une approche itérative sur **7 semaines**, avec un focus collaboratif :
+
+- **Semaine 1-2** : Cadrage, collecte des données AF3V
+- **Semaine 3-4** : Enrichissement avec météo + premiers calculs, chatbot
+- **Semaine 5-6** : Visualisation, design application, version bêta
+- **Semaine 7** : Polish, IA, exportation, débogage, mise en production""")
+
     st.markdown("""
         ## Les Technologies
 """, unsafe_allow_html=True)
