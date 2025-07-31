@@ -506,6 +506,9 @@ def create_map(datafinal):
     #Fonction pour placer les marqueurs sur la carte
     def add_markers(row, my_map=my_map):
         location = row["Nom"]
+        coords = row["Coordonnées milieu"]
+        # Supprimer parenthèses et espaces
+        coords = coords.replace("(", "").replace(")", "").strip()
         lon, lat =  map(float, row["Coordonnées milieu"].split(","))
         score = row.get("SolarScore")
         color = colors_score.get(score)
