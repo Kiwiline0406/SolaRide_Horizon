@@ -316,10 +316,10 @@ if "last_click" in st.session_state and st.session_state["last_click"]:
     val_bike = int(round(total_energie.sum() / 0.5))
 
     #création de la variable alimentation annuelle moy éclairage urbain en nuités (8h/jour)pour 40 lampadaires
-    val_bus = int(round(total_energie.sum() / 200))
+    val_lamp = int(round(total_energie.sum() / 200))
 
     #création de la variable nbre de km annuels pour un BlueBus de 12m
-    val_lamp = round((total_energie.sum() * 225) / 272)
+    val_bus = round((total_energie.sum() * 225) / 272)
 
     #création de la variable revenus de revente Enedis
     val_enedis = round(total_energie.sum()  * 0.13)
