@@ -62,10 +62,11 @@ with tab1:
         ## ✨ Perspectives
                
         📦 Packaging SaaS possible pour les collectivités locales
-        🤝 Collaboration avec l'équipe du projet de Genève
-        💰 Analyse Financière du rendement des installations
-        ⚡ Déploiement dans des communes tests en France
-        🌍 Extension à d'autres pays européens (Suisse, Belgique...)
+            
+        - 🤝 Collaboration avec l'équipe du projet de Genève
+        - 💰 Analyse Financière du rendement des installations
+        - ⚡ Déploiement dans des communes tests en France
+        - 🌍 Extension à d'autres pays européens (Suisse, Belgique...)
         """, unsafe_allow_html=True)
 
 
