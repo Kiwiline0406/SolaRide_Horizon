@@ -57,9 +57,9 @@ st.write("---")
 # url = "https://www.af3v.org/resultats-des-recherches/?stv%5B1%5D=on&sact%5B9%5D=on&sact%5B6%5D=on&ssort=dista"
 # # Tri : voie verte lisse, vélo de route et roller
 
-@st.cache_resource
-def get_session():
-    return requests_cache.CachedSession('.http_cache', expire_after=86400)  # 24h
+# @st.cache_resource
+# def get_session():
+#     return requests_cache.CachedSession('.http_cache', expire_after=604800)  # 1 semaine
 
 # @st.cache_data
 # def get_basic_fiches():
@@ -466,29 +466,29 @@ datafinal = load_data()
 url_map = 'http://api-adresse.data.gouv.fr/search/'
 
 
-def get_lat_lon(address : str):
+# def get_lat_lon(address : str):
 
-    session = get_session()
-    params = {
-        'q': address,
+#     session = get_session()
+#     params = {
+#         'q': address,
 
-        'limit': 1
-    }
-    response = session.get(url_map, params=params)
-    j = response.json()
-    if len(j.get('features')) > 0:
-        first_result = j.get('features')[0]
-        lon, lat = first_result.get('geometry').get('coordinates')
-        return(lat, lon)
-    else:
-        return('No result')
+#         'limit': 1
+#     }
+#     response = session.get(url_map, params=params)
+#     j = response.json()
+#     if len(j.get('features')) > 0:
+#         first_result = j.get('features')[0]
+#         lon, lat = first_result.get('geometry').get('coordinates')
+#         return(lat, lon)
+#     else:
+#         return('No result')
 
 @st.cache_data
 def create_map(datafinal):
     """Créer la carte Folium avec les marqueurs"""
 
     #Récupérer les coordonnées de France à l'aide de la fonction get_lat_lon
-    france_coord = get_lat_lon("France")
+    france_coord = [46.603354, 1.888334]
 
     #Centrer la carte folium sur ces coordonnées
     my_map = folium.Map(location=france_coord, zoom_start=6)
