@@ -57,9 +57,9 @@ st.write("---")
 # url = "https://www.af3v.org/resultats-des-recherches/?stv%5B1%5D=on&sact%5B9%5D=on&sact%5B6%5D=on&ssort=dista"
 # # Tri : voie verte lisse, vélo de route et roller
 
-# @st.cache_resource
-# def get_session():
-#     return requests_cache.CachedSession('.http_cache', expire_after=86400)  # 24h
+@st.cache_resource
+def get_session():
+    return requests_cache.CachedSession('.http_cache', expire_after=86400)  # 24h
 
 # @st.cache_data
 # def get_basic_fiches():
@@ -548,16 +548,16 @@ st.write("""Pour ceci, nous leur avons attribué un score nommé SolarScore
 st.write("""Ce SolarScore va de A à E, avec A les voies avec un potentiel solaire nettement supérieur à celui de Solar Horizon, 
          et E un potentiel solaire nettement inférieur.""")
 
-if not dF.empty:
-    # Créer et afficher la carte
-    my_map = create_map(dF)
-        
-    # Utiliser st.components.v1.html
-    map_html = my_map._repr_html_()
-    components.html(map_html, height=600, scrolling=True)
 
-    # Afficher la légende
-    st.markdown("""
+# Créer et afficher la carte
+my_map = create_map(dF)
+        
+# Utiliser st.components.v1.html
+map_html = my_map._repr_html_()
+components.html(map_html, height=600, scrolling=True)
+
+# Afficher la légende
+st.markdown("""
     <div style="line-height: 1.8">
         <b>Légende SolarScore :</b><br>
         <span style='display:inline-block; width:12px; height:12px; background-color:darkgreen; border-radius:50%; margin-right:6px'></span> A : Excellent potentiel solaire (entre 137% et 127% de l'énerge produite avec Solar Horizon)<br>
@@ -568,8 +568,6 @@ if not dF.empty:
     </div>
     """, unsafe_allow_html=True)
 
-else:
-    st.error("Aucune donnée à afficher")
         
 # Bouton de téléchargement
 #csv = dF.to_csv(index=False)
