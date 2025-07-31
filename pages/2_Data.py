@@ -508,7 +508,7 @@ def create_map(datafinal):
         location = row["Nom"]
         lon, lat = row["Coordonnées milieu"]
         score = row.get("SolarScore")
-        color = colors_score.get(score)
+        color = colors_score.get(score, "gray")  # couleur par défaut si score inconnu
 
         # Créer un popup avec plus d'informations
         popup_text = f"""
