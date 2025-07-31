@@ -548,7 +548,7 @@ st.write("""Pour ceci, nous leur avons attribué un score nommé SolarScore
 st.write("""Ce SolarScore va de A à E, avec A les voies avec un potentiel solaire nettement supérieur à celui de Solar Horizon, 
          et E un potentiel solaire nettement inférieur.""")
 
-if not df.empty:
+if not dF.empty:
     # Créer et afficher la carte
     my_map = create_map(dF)
         
