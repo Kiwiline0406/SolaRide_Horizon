@@ -42,6 +42,9 @@ SolaRide Horizon est une application de data analyse développée pour estimer l
 
 ## ⚙️ Fonctionnalités de l'application
 
+### 🛜 Lien de l'application
+- https://solaridehorizon.streamlit.app/
+
 ### 🗺️ Carte interactive
 - Visualisation des voies vertes référencées par AF3V
 - Filtrage par piste cyclable, rendement solaire, surface estimée
