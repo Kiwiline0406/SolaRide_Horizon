@@ -457,10 +457,10 @@ def get_session():
         # --------------------------------------------------------------- #
 @st.cache_data()
 def load_data():
-    dF = pd.read_csv("datasets/df_voies_vertes_MAJ_AOUT.csv")
-    return dF
+    datafinal = pd.read_csv("datasets/df_voies_vertes_MAJ_AOUT.csv")
+    return datafinal
 
-dF = load_data()
+datafinal = load_data()
 
 
 url_map = 'http://api-adresse.data.gouv.fr/search/'
@@ -484,7 +484,7 @@ def get_lat_lon(address : str):
         return('No result')
 
 @st.cache_data
-def create_map(dF):
+def create_map(datafinal):
     """Créer la carte Folium avec les marqueurs"""
 
     #Récupérer les coordonnées de France à l'aide de la fonction get_lat_lon
@@ -531,7 +531,7 @@ def create_map(dF):
         
 
     #Ajouter les marqueurs sur la carte
-    dF.apply(add_markers, axis=1)
+    datafinal.apply(add_markers, axis=1)
 
     #Afficher la carte folium
     return my_map
@@ -550,7 +550,7 @@ st.write("""Ce SolarScore va de A à E, avec A les voies avec un potentiel solai
 
 
 # Créer et afficher la carte
-my_map = create_map(dF)
+my_map = create_map(datafinal)
         
 # Utiliser st.components.v1.html
 map_html = my_map._repr_html_()
