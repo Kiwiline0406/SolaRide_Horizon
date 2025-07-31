@@ -509,7 +509,7 @@ def create_map(datafinal):
         coords = row["Coordonnées milieu"]
         # Supprimer parenthèses et espaces
         coords = coords.replace("(", "").replace(")", "").strip()
-        lon, lat =  map(float, row["Coordonnées milieu"].split(","))
+        lon, lat =  map(float, coords.split(","))
         score = row.get("SolarScore")
         color = colors_score.get(score)
 
