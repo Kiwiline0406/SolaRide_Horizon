@@ -32,10 +32,10 @@ Découvrez ci-dessous l’histoire et les objectifs de ce projet.</p>
 # ------------------------------------------------------------------------------------------------------------------------ #
 
 # Création de 5 onglets
-tab1, tab2, tab3, tab4 = st.tabs(["Contexte", "Méthodologie / Technologies", "L'équipe", "Liens utiles"])
+tab1, tab2, tab3, tab4 = st.tabs(["Présentation", "Méthodologie / Technologies", "L'équipe", "Liens utiles"])
 
             # ---------------------- #
-            #         ONGLET 1 
+            #         ONGLET 1       #
             # ---------------------- #
 
 
@@ -58,6 +58,14 @@ with tab1:
         | 🔄 **Révision du sujet** | Estimation du rendement solaire basé sur les données AF3V + météo |
         | 🧠 **Inspiration** | Projet suisse à Genève + projet "Potentiel Scolaire" de Data For Good |
         | 🛠️ **Objectif technique** | Créer une application de A à Z avec données, visualisations et ChatBot IA |
+               
+        ## ✨ Perspectives
+               
+        📦 Packaging SaaS possible pour les collectivités locales
+        🤝 Collaboration avec l'équipe du projet de Genève
+        💰 Analyse Financière du rendement des installations
+        ⚡ Déploiement dans des communes tests en France
+        🌍 Extension à d'autres pays européens (Suisse, Belgique...)
         """, unsafe_allow_html=True)
 
 
