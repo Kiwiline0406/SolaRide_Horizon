@@ -369,7 +369,7 @@ if "last_click" in st.session_state and st.session_state["last_click"]:
         st.markdown(
         f"""
         <div style="display: flex; align-items: center; gap: 40px;">
-            <div><img src="data:image/png;base64,{bike_icon}" width="48"><br><span>{val_bike} vélos</span></div>
+            <div><img src="data:image/png;base64,{bike_icon}" width="48"><br><span>{val_bike} charges</span></div>
         </div>
         """,
         unsafe_allow_html=True
