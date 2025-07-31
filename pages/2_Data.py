@@ -1,5 +1,4 @@
 
-
 #----------------------------------------------------------------------------------------------------------------------------------------------- #
 #                                                               Librairies                                                                       #
 #----------------------------------------------------------------------------------------------------------------------------------------------- #
@@ -20,6 +19,11 @@ import streamlit.components.v1 as components
 import requests_cache
 from retry_requests import retry
 import openmeteo_requests
+import matplotlib.pyplot as plt
+import plotly.express as px
+import altair as alt
+import json
+import geopandas as gpd
 
 st.set_page_config(page_title="Outil de visualisation", layout="wide")
 
@@ -29,7 +33,7 @@ with open('style.css') as c:
 st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
 st.markdown(
-    "<h1 style='text-align: center;'>Nos Voies Vertes Françaises</h1>",
+    "<h1 style='text-align: center;'>Voies Vertes Françaises</h1>",
     unsafe_allow_html=True
 )
 st.write("---")
@@ -38,9 +42,16 @@ st.write("---")
 # ------------------------------------------------------------------------------------------------------------------------ #
 
 
-        # ------------------------------------------------ #
-        #                     WEBSCRAPING                  #
-        # ------------------------------------------------ #
+#---------------------------------------------------------------------------------------------------------------- #
+#                                                  CARTE                                                          #
+#---------------------------------------------------------------------------------------------------------------- #
+
+
+
+
+        # --------------------------------------------------------------- #
+        #                             WEBSCRAPING                         #
+        # --------------------------------------------------------------- #
 
 # URL de base
 url = "https://www.af3v.org/resultats-des-recherches/?stv%5B1%5D=on&sact%5B9%5D=on&sact%5B6%5D=on&ssort=dista"
@@ -268,7 +279,7 @@ def solar_info_annuel(coord_tuple):
     lon, lat = map(float, coord_string.split(','))
 
     # Délai de 1-2 secondes entre chaque requête
-    time.sleep(1.5)
+    time.sleep(0.5)
     
     # Setup the Open-Meteo API client with cache and retry on error
     cache_session = requests_cache.CachedSession('.cache', expire_after = -1)
@@ -308,7 +319,10 @@ def solar_info_annuel(coord_tuple):
 
 
     # Nettoyage pour exploitation des données du df Hourly
-    hourly_dataframe['month'] = hourly_dataframe['date'].dt.month_name(locale='English')
+    english_months = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December']
+
+    hourly_dataframe['month'] = hourly_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
     hourly_dataframe['month_num'] = hourly_dataframe['date'].dt.month
 
     hourly_dataframe = hourly_dataframe.iloc[2:]
@@ -344,7 +358,7 @@ def solar_info_annuel(coord_tuple):
 
     daily_dataframe = daily_dataframe.iloc[1:]
 
-    daily_dataframe['month'] = daily_dataframe['date'].dt.month_name(locale='English')
+    daily_dataframe['month'] = daily_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
     daily_dataframe['month_num'] = daily_dataframe['date'].dt.month
     daily_dataframe['days_in_month'] = daily_dataframe['date'].dt.daysinmonth
 
@@ -419,7 +433,7 @@ def solar_info_annuel(coord_tuple):
     return round(df['energie_mois_kWh/mois/m2'].sum(), 2)
     
 df['Energie produite annuelle (kWh)'] = df['Coordonnées milieu'].apply(solar_info_annuel)
-df['Énergie produite annuelle (kWh / 860m2 de panneau)'] = df['Energie produite annuelle (kWh)']. apply(lambda x: x*860)
+df['Énergie produite annuelle (kWh / 860m2 de panneau)'] = round(df['Energie produite annuelle (kWh)'].apply(lambda x: x*860))
 
 
         # --------------------------------------------------------------- #
@@ -527,16 +541,16 @@ st.write("""Pour ceci, nous leur avons attribué un score nommé SolarScore
 st.write("""Ce SolarScore va de A à E, avec A les voies avec un potentiel solaire nettement supérieur à celui de Solar Horizon, 
          et E un potentiel solaire nettement inférieur.""")
 
-
-# Créer et afficher la carte
-my_map = create_map(datafinal)
+if not df.empty:
+    # Créer et afficher la carte
+    my_map = create_map(dF)
         
-# Utiliser st.components.v1.html
-map_html = my_map._repr_html_()
-components.html(map_html, height=600, scrolling=True)
+    # Utiliser st.components.v1.html
+    map_html = my_map._repr_html_()
+    components.html(map_html, height=600, scrolling=True)
 
-# Afficher la légende
-st.markdown("""
+    # Afficher la légende
+    st.markdown("""
     <div style="line-height: 1.8">
         <b>Légende SolarScore :</b><br>
         <span style='display:inline-block; width:12px; height:12px; background-color:darkgreen; border-radius:50%; margin-right:6px'></span> A : Excellent potentiel solaire (entre 137% et 127% de l'énerge produite avec Solar Horizon)<br>
@@ -547,6 +561,8 @@ st.markdown("""
     </div>
     """, unsafe_allow_html=True)
 
+else:
+    st.error("Aucune donnée à afficher")
         
 # Bouton de téléchargement
 #csv = dF.to_csv(index=False)
