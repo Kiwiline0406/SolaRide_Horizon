@@ -350,7 +350,7 @@ if "last_click" in st.session_state and st.session_state["last_click"]:
 
     st.write("""Les nombres ci dessous représentent des valeurs annuelles, respectivement la quantité d'énergie produite, 
              le nombre de charges vélos, le nombre de kilomètres pour un bluebue de 12m, le nombre de lampadaires (allumés 8h/nuit), 
-             la somme issue de la revente de l'énergie produite, et enfin la consommation annuelle en électricité pour X persones.
+             la somme issue de la revente de l'énergie produite, et enfin la consommation annuelle en électricité pour X personnes.
              """)
 
     col1, col2, col3, col4, col5, col6 = st.columns([1, 1, 1, 1, 1, 1])
