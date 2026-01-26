@@ -272,110 +272,110 @@ st.write("---")
         #                    COMPLETION DONNEES SOLAIRES                  #
         # --------------------------------------------------------------- #
 
-@st.cache_data
-def solar_info_annuel(coord_tuple):
-    coord_string = str(coord_tuple)
-    coord_string = coord_string.strip('()')  # Retire les parenthèses si présentes
-    lon, lat = map(float, coord_string.split(','))
+#@st.cache_data
+#def solar_info_annuel(coord_tuple):
+  #  coord_string = str(coord_tuple)
+   # coord_string = coord_string.strip('()')  # Retire les parenthèses si présentes
+  #  lon, lat = map(float, coord_string.split(','))
 
     # Délai de 1-2 secondes entre chaque requête
-    time.sleep(0.5)
+  #  time.sleep(0.5)
     
     # Setup the Open-Meteo API client with cache and retry on error
-    cache_session = requests_cache.CachedSession('.cache', expire_after = -1)
-    retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
-    openmeteo = openmeteo_requests.Client(session = retry_session)
+  #  cache_session = requests_cache.CachedSession('.cache', expire_after = -1)
+  #  retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
+   # openmeteo = openmeteo_requests.Client(session = retry_session)
 
     # Paramètres à renseigner
-    url = "https://archive-api.open-meteo.com/v1/archive"
-    params = {
-        "latitude": lat,
-        "longitude": lon,
-        "start_date": f"2024-01-01",
-        "end_date": f"2024-12-31",
-        "daily": ["sunshine_duration", "temperature_2m_mean"],
-        "hourly": "shortwave_radiation",
-        "timezone": "Europe/Berlin"
-    }
-    responses = openmeteo.weather_api(url, params=params)
+ #   url = "https://archive-api.open-meteo.com/v1/archive"
+ #   params = {
+ #       "latitude": lat,
+ #       "longitude": lon,
+   #     "start_date": f"2024-01-01",
+   #     "end_date": f"2024-12-31",
+  #      "daily": ["sunshine_duration", "temperature_2m_mean"],
+   #     "hourly": "shortwave_radiation",
+   #     "timezone": "Europe/Berlin"
+   # }
+ #   responses = openmeteo.weather_api(url, params=params)
 
-    response = responses[0]
+ #   response = responses[0]
     
 
     # Process hourly data
-    hourly = response.Hourly()
-    hourly_shortwave_radiation = hourly.Variables(0).ValuesAsNumpy()
+ #   hourly = response.Hourly()
+  #  hourly_shortwave_radiation = hourly.Variables(0).ValuesAsNumpy()
 
-    hourly_data = {"date": pd.date_range(
-        start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
-        end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True),
-        freq = pd.Timedelta(seconds = hourly.Interval()),
-        inclusive = "left"
-    )}
+   # hourly_data = {"date": pd.date_range(
+    #    start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
+     #   end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True),
+      #  freq = pd.Timedelta(seconds = hourly.Interval()),
+       # inclusive = "left"
+#    )}
 
-    hourly_data["shortwave_radiation"] = hourly_shortwave_radiation
+ #   hourly_data["shortwave_radiation"] = hourly_shortwave_radiation
 
-    hourly_dataframe = pd.DataFrame(data = hourly_data)
+  #  hourly_dataframe = pd.DataFrame(data = hourly_data)
 
 
     # Nettoyage pour exploitation des données du df Hourly
-    english_months = ['January', 'February', 'March', 'April', 'May', 'June',
-                        'July', 'August', 'September', 'October', 'November', 'December']
+   # english_months = ['January', 'February', 'March', 'April', 'May', 'June',
+    #                    'July', 'August', 'September', 'October', 'November', 'December']
 
-    hourly_dataframe['month'] = hourly_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
-    hourly_dataframe['month_num'] = hourly_dataframe['date'].dt.month
+#    hourly_dataframe['month'] = hourly_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
+ #   hourly_dataframe['month_num'] = hourly_dataframe['date'].dt.month
 
-    hourly_dataframe = hourly_dataframe.iloc[2:]
+  #  hourly_dataframe = hourly_dataframe.iloc[2:]
 
-    df_ghi = hourly_dataframe.groupby(['month', 'month_num']).agg(
-        ghi_mean_W_m2=('shortwave_radiation', 'mean')
-    )
+   # df_ghi = hourly_dataframe.groupby(['month', 'month_num']).agg(
+    #    ghi_mean_W_m2=('shortwave_radiation', 'mean')
+#    )
 
-    df_ghi = df_ghi.sort_values(by='month_num')
+ #   df_ghi = df_ghi.sort_values(by='month_num')
 
 
     # Process daily data
-    daily = response.Daily()
-    daily_sunshine_duration = daily.Variables(0).ValuesAsNumpy()
-    daily_temperature_2m_mean = daily.Variables(1).ValuesAsNumpy()
+  #  daily = response.Daily()
+   # daily_sunshine_duration = daily.Variables(0).ValuesAsNumpy()
+    #daily_temperature_2m_mean = daily.Variables(1).ValuesAsNumpy()
 
-    daily_data = {"date": pd.date_range(
-        start = pd.to_datetime(daily.Time(), unit = "s", utc = True),
-        end = pd.to_datetime(daily.TimeEnd(), unit = "s", utc = True),
-        freq = pd.Timedelta(seconds = daily.Interval()),
-        inclusive = "left"
-    )}
+#    daily_data = {"date": pd.date_range(
+ #       start = pd.to_datetime(daily.Time(), unit = "s", utc = True),
+  #      end = pd.to_datetime(daily.TimeEnd(), unit = "s", utc = True),
+   #     freq = pd.Timedelta(seconds = daily.Interval()),
+    #    inclusive = "left"
+#    )}
 
-    daily_data["sunshine_duration"] = daily_sunshine_duration
-    daily_data["temperature_2m_mean"] = daily_temperature_2m_mean
+ #   daily_data["sunshine_duration"] = daily_sunshine_duration
+  #  daily_data["temperature_2m_mean"] = daily_temperature_2m_mean
 
-    daily_dataframe = pd.DataFrame(data = daily_data)
+ #   daily_dataframe = pd.DataFrame(data = daily_data)
 
 
     # Nettoyage pour exploitation des données du df daily
-    daily_dataframe['sunshine_duration_hours'] = daily_dataframe['sunshine_duration'] / 3600
-    daily_dataframe.drop(columns='sunshine_duration', inplace=True)
+  #  daily_dataframe['sunshine_duration_hours'] = daily_dataframe['sunshine_duration'] / 3600
+   # daily_dataframe.drop(columns='sunshine_duration', inplace=True)
 
-    daily_dataframe = daily_dataframe.iloc[1:]
+#    daily_dataframe = daily_dataframe.iloc[1:]
 
-    daily_dataframe['month'] = daily_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
-    daily_dataframe['month_num'] = daily_dataframe['date'].dt.month
-    daily_dataframe['days_in_month'] = daily_dataframe['date'].dt.daysinmonth
-
-
-
-    df_weather = daily_dataframe.groupby(['month', 'month_num']).agg(
-        temp_mean_c=('temperature_2m_mean', 'mean'),
-        sunshine_duration_mean_hour=('sunshine_duration_hours', 'mean'),
-        days_in_month=('days_in_month', 'first')  
-    )
+ #   daily_dataframe['month'] = daily_dataframe['date'].dt.month.apply(lambda x: english_months[x-1])
+#    daily_dataframe['month_num'] = daily_dataframe['date'].dt.month
+ #   daily_dataframe['days_in_month'] = daily_dataframe['date'].dt.daysinmonth
 
 
-    df_weather = df_weather.sort_values(by='month_num')
+
+#    df_weather = daily_dataframe.groupby(['month', 'month_num']).agg(
+ #       temp_mean_c=('temperature_2m_mean', 'mean'),
+  #      sunshine_duration_mean_hour=('sunshine_duration_hours', 'mean'),
+   #     days_in_month=('days_in_month', 'first')  
+#    )
+
+
+ #   df_weather = df_weather.sort_values(by='month_num')
 
     # Concaténation des dfs
 
-    df = pd.merge(df_weather, df_ghi, on='month')
+#    df = pd.merge(df_weather, df_ghi, on='month')
     
 
     # ==================#
@@ -385,15 +385,15 @@ def solar_info_annuel(coord_tuple):
 
     # --- Paramètres spécifiques à l'installation ---
     # Ajout de paramètres types, servant d'exemples, 
-    EFFICIENCY_PANEL = 0.20  # Exemple : rendement de 20 % (par ex. pour un panneau de 400W, diviser par sa surface en m²)
+#    EFFICIENCY_PANEL = 0.20  # Exemple : rendement de 20 % (par ex. pour un panneau de 400W, diviser par sa surface en m²)
 
-    ANGLE_ORIENTATION_FACTOR = 1.00 # paramètre crucial pour estimer le rendement énergétique réel d’un système photovoltaïque, car il prend en compte l’impact de l’alignement physique de l’installation par rapport au soleil.
+ #   ANGLE_ORIENTATION_FACTOR = 1.00 # paramètre crucial pour estimer le rendement énergétique réel d’un système photovoltaïque, car il prend en compte l’impact de l’alignement physique de l’installation par rapport au soleil.
 
-    TEMP_COEFFICIENT_PMAX = 0.004  # Typique : 0.004 soit 0,4 % de perte de puissance par °C 
+  #  TEMP_COEFFICIENT_PMAX = 0.004  # Typique : 0.004 soit 0,4 % de perte de puissance par °C 
 
-    SYSTEM_LOSS_FACTOR = 0.85      # Tient compte des pertes du système : onduleur, câblage, saleté, ombrage, etc. (typiquement entre 0.75 et 0.90)
+   # SYSTEM_LOSS_FACTOR = 0.85      # Tient compte des pertes du système : onduleur, câblage, saleté, ombrage, etc. (typiquement entre 0.75 et 0.90)
 
-    DELTA_TEMP_PANEL = 20          # Écart estimé entre la température du panneau et la température ambiante (en °C)
+#    DELTA_TEMP_PANEL = 20          # Écart estimé entre la température du panneau et la température ambiante (en °C)
 
     # =================#
     #     Formules     #
@@ -401,39 +401,39 @@ def solar_info_annuel(coord_tuple):
 
     # 1. Calcul de l’irradiance journalière en kWh/m²/jour
     # Ce calcul suppose que ghi_mean_W_m2 et sunshine_duration_mean_hour représentent des moyennes journalières pour le mois.
-    df['ghi_journalier_kWh_m2_jour'] = (df['ghi_mean_W_m2'] * df['sunshine_duration_mean_hour']) / 1000
+ #   df['ghi_journalier_kWh_m2_jour'] = (df['ghi_mean_W_m2'] * df['sunshine_duration_mean_hour']) / 1000
 
     # 2. Estimation de la température de fonctionnement des panneaux
     # La température du panneau est généralement supérieure à la température ambiante
-    df['panel_temp_c'] = df['temp_mean_c'] + DELTA_TEMP_PANEL
+#    df['panel_temp_c'] = df['temp_mean_c'] + DELTA_TEMP_PANEL
 
     # 3. Calcul du facteur de correction de température
     # Les performances diminuent lorsque la température dépasse 25°C
-    df['correction_temp'] = 1 - (df['panel_temp_c'] - 25) * TEMP_COEFFICIENT_PMAX
+#    df['correction_temp'] = 1 - (df['panel_temp_c'] - 25) * TEMP_COEFFICIENT_PMAX
 
     # On s’assure que correction_temp reste dans des bornes raisonnables (évite des gains irréalistes ou pertes trop fortes)
-    df['correction_temp'] = df['correction_temp'].clip(lower=0.95, upper=1.05)
+#    df['correction_temp'] = df['correction_temp'].clip(lower=0.95, upper=1.05)
 
     # 4. Calcul de la production d’énergie journalière par m² (kWh/jour/m²)
     # On combine tous les facteurs :
     # GHI_journalier * Rendement * Facteur d’orientation * Correction température * Pertes système
-    df['energie_jour_kWh/j/m2'] = df['ghi_journalier_kWh_m2_jour'] * \
-                                EFFICIENCY_PANEL * \
-                                ANGLE_ORIENTATION_FACTOR * \
-                                df['correction_temp'] * \
-                                SYSTEM_LOSS_FACTOR
+#    df['energie_jour_kWh/j/m2'] = df['ghi_journalier_kWh_m2_jour'] * \
+  #                              EFFICIENCY_PANEL * \
+   #                             ANGLE_ORIENTATION_FACTOR * \
+    #                            df['correction_temp'] * \
+     #                           SYSTEM_LOSS_FACTOR
 
     # Arrondi à 2 décimales pour l’affichage
-    df['energie_jour_kWh/j/m2'] = round(df['energie_jour_kWh/j/m2'], 2)
+#    df['energie_jour_kWh/j/m2'] = round(df['energie_jour_kWh/j/m2'], 2)
 
     # 5. Calcul de la production mensuelle d’énergie par m² (kWh/mois/m²)
     # On multiplie la production journalière par le nombre de jours dans le mois
-    df['energie_mois_kWh/mois/m2'] = round(df['energie_jour_kWh/j/m2'] * df['days_in_month'], 2)
+#    df['energie_mois_kWh/mois/m2'] = round(df['energie_jour_kWh/j/m2'] * df['days_in_month'], 2)
 
-    return round(df['energie_mois_kWh/mois/m2'].sum(), 2)
+#    return round(df['energie_mois_kWh/mois/m2'].sum(), 2)
     
-df['Energie produite annuelle (kWh)'] = df['Coordonnées milieu'].apply(solar_info_annuel)
-df['Énergie produite annuelle (kWh / 860m2 de panneau)'] = round(df['Energie produite annuelle (kWh)'].apply(lambda x: x*860))
+#df['Energie produite annuelle (kWh)'] = df['Coordonnées milieu'].apply(solar_info_annuel)
+#df['Énergie produite annuelle (kWh / 860m2 de panneau)'] = round(df['Energie produite annuelle (kWh)'].apply(lambda x: x*860))
 
 
         # --------------------------------------------------------------- #
@@ -441,14 +441,14 @@ df['Énergie produite annuelle (kWh / 860m2 de panneau)'] = round(df['Energie pr
         # --------------------------------------------------------------- #
 
 
-@st.cache_data()
-def load_data():
-    df_solarscore = pd.read_csv("datasets/df_solarscore.csv")
-    return df_solarscore
+#@st.cache_data()
+#def load_data():
+ #   df_solarscore = pd.read_csv("datasets/df_solarscore.csv")
+  #  return df_solarscore
 
-df_solarscore = load_data()
+#df_solarscore = load_data()
 
-dF = pd.merge(df, df_solarscore, on='Nom')
+#dF = pd.merge(df, df_solarscore, on='Nom')
 
 
 
@@ -456,113 +456,113 @@ dF = pd.merge(df, df_solarscore, on='Nom')
         #                         AFFICHAGE CARTE                         #
         # --------------------------------------------------------------- #
 
-url_map = 'http://api-adresse.data.gouv.fr/search/'
+#url_map = 'http://api-adresse.data.gouv.fr/search/'
 
 
-def get_lat_lon(address : str):
+#def get_lat_lon(address : str):
 
-    session = get_session()
-    params = {
-        'q': address,
+ #   session = get_session()
+  #  params = {
+   #     'q': address,
 
-        'limit': 1
-    }
-    response = session.get(url_map, params=params)
-    j = response.json()
-    if len(j.get('features')) > 0:
-        first_result = j.get('features')[0]
-        lon, lat = first_result.get('geometry').get('coordinates')
-        return(lat, lon)
-    else:
-        return('No result')
+    #    'limit': 1
+    #}
+    #response = session.get(url_map, params=params)
+    #j = response.json()
+    #if len(j.get('features')) > 0:
+     #   first_result = j.get('features')[0]
+      #  lon, lat = first_result.get('geometry').get('coordinates')
+       # return(lat, lon)
+    #else:
+     #   return('No result')
 
-@st.cache_data
-def create_map(dF):
-    """Créer la carte Folium avec les marqueurs"""
+#@st.cache_data
+#def create_map(dF):
+ #   """Créer la carte Folium avec les marqueurs"""
 
     #Récupérer les coordonnées de France à l'aide de la fonction get_lat_lon
-    france_coord = get_lat_lon("France")
+  #  france_coord = get_lat_lon("France")
 
     #Centrer la carte folium sur ces coordonnées
-    my_map = folium.Map(location=france_coord, zoom_start=6)
+   # my_map = folium.Map(location=france_coord, zoom_start=6)
 
     # Ajouter un cluster de marqueurs pour de meilleures performances
-    marker_cluster = MarkerCluster().add_to(my_map)
+    #marker_cluster = MarkerCluster().add_to(my_map)
 
     # Ajouter des couleurs pour le SolarScore
-    colors_score = {"A":"darkgreen",
-                    "B":"green", 
-                    "C":"lightgreen",
-                    "D":"orange",
-                    "E":"red"}
+    #colors_score = {"A":"darkgreen",
+     #               "B":"green", 
+      #              "C":"lightgreen",
+       #             "D":"orange",
+        #            "E":"red"}
 
     #Fonction pour placer les marqueurs sur la carte
-    def add_markers(row, my_map=my_map):
-        location = row["Nom"]
-        lon, lat = row["Coordonnées milieu"]
-        score = row.get("SolarScore")
-        color = colors_score.get(score)
+    #def add_markers(row, my_map=my_map):
+     #   location = row["Nom"]
+      #  lon, lat = row["Coordonnées milieu"]
+       # score = row.get("SolarScore")
+        #color = colors_score.get(score)
 
         # Créer un popup avec plus d'informations
-        popup_text = f"""
-        <b><span style='color:green'>{location}</span></b><br>
-        <br>
-        <b>De 📍 : </b>{row.get('Début', 'N/A')}<br>
-        <b>À 📍 : </b>{row.get('Fin', 'N/A')}<br>
-        <b>Distance: </b>{row.get('Distance', 'N/A')} km<br>
-        <b>Nature: </b>{row.get('Groupes nature voie', 'N/A')}<br>
-        <b>Lien de la fiche : </b><a href="{row.get('Lien', '#')}" target="_blank">ouvrir la fiche dans une autre fenêtre</a><br>
-        <b>Couverture de la piste : </b>{row.get('% Couverture correspondant (200m)', 'N/A')} %<br>
-        <b>Energie produite : </b>{row.get('Énergie produite annuelle (kWh / 860m2 de panneau)')} kWh (moyenne anuelle)<br>
-        <b>SolarScore 🔆 : </b><span style='color:{color}; font-weight:bold'>{row.get('SolarScore')}</span><br>
-        """
+        #popup_text = f"""
+        #<b><span style='color:green'>{location}</span></b><br>
+        #<br>
+        #<b>De 📍 : </b>{row.get('Début', 'N/A')}<br>
+        #<b>À 📍 : </b>{row.get('Fin', 'N/A')}<br>
+        #<b>Distance: </b>{row.get('Distance', 'N/A')} km<br>
+        #<b>Nature: </b>{row.get('Groupes nature voie', 'N/A')}<br>
+        #<b>Lien de la fiche : </b><a href="{row.get('Lien', '#')}" target="_blank">ouvrir la fiche dans une autre fenêtre</a><br>
+        #<b>Couverture de la piste : </b>{row.get('% Couverture correspondant (200m)', 'N/A')} %<br>
+        #<b>Energie produite : </b>{row.get('Énergie produite annuelle (kWh / 860m2 de panneau)')} kWh (moyenne anuelle)<br>
+        #<b>SolarScore 🔆 : </b><span style='color:{color}; font-weight:bold'>{row.get('SolarScore')}</span><br>
+        #"""
 
-        folium.Marker(location=(lat, lon), 
-                      popup=folium.Popup(popup_text, max_width=300), 
-                      icon=folium.Icon(icon="leaf", color=color)
-                      ).add_to(marker_cluster)
+        #folium.Marker(location=(lat, lon), 
+         #             popup=folium.Popup(popup_text, max_width=300), 
+          #            icon=folium.Icon(icon="leaf", color=color)
+           #           ).add_to(marker_cluster)
         
 
     #Ajouter les marqueurs sur la carte
-    dF.apply(add_markers, axis=1)
+    #dF.apply(add_markers, axis=1)
 
     #Afficher la carte folium
-    return my_map
+    #return my_map
 
 
 # Affichage de la carte
 
-st.write("""Avec la carte ci-dessous, nous cherchons à identifier les voies vertes référencées sur le site de l'AF3V
-         qui pourraient se prêter à une duplication du projet Solar Horizon.""")
-st.write("""Pour ceci, nous leur avons attribué un score nommé SolarScore 
-         basé sur le ratio entre :\n
-         - l'énergie produite annuellement (en kWh par 860m2 de panneau) sur un point au milieu de la voie verte\n
-         - et l'énergie produite annuellement à Satigny, commune du projet Solar Horizon.""")      
-st.write("""Ce SolarScore va de A à E, avec A les voies avec un potentiel solaire nettement supérieur à celui de Solar Horizon, 
-         et E un potentiel solaire nettement inférieur.""")
+#st.write("""Avec la carte ci-dessous, nous cherchons à identifier les voies vertes référencées sur le site de l'AF3V
+ #        qui pourraient se prêter à une duplication du projet Solar Horizon.""")
+#st.write("""Pour ceci, nous leur avons attribué un score nommé SolarScore 
+ #        basé sur le ratio entre :\n
+  #       - l'énergie produite annuellement (en kWh par 860m2 de panneau) sur un point au milieu de la voie verte\n
+   #      - et l'énergie produite annuellement à Satigny, commune du projet Solar Horizon.""")      
+#st.write("""Ce SolarScore va de A à E, avec A les voies avec un potentiel solaire nettement supérieur à celui de Solar Horizon, 
+ #        et E un potentiel solaire nettement inférieur.""")
 
-if not df.empty:
+#if not df.empty:
     # Créer et afficher la carte
-    my_map = create_map(dF)
+ #   my_map = create_map(dF)
         
     # Utiliser st.components.v1.html
-    map_html = my_map._repr_html_()
-    components.html(map_html, height=600, scrolling=True)
+  #  map_html = my_map._repr_html_()
+   # components.html(map_html, height=600, scrolling=True)
 
     # Afficher la légende
-    st.markdown("""
-    <div style="line-height: 1.8">
-        <b>Légende SolarScore :</b><br>
-        <span style='display:inline-block; width:12px; height:12px; background-color:darkgreen; border-radius:50%; margin-right:6px'></span> A : Excellent potentiel solaire (entre 137% et 127% de l'énerge produite avec Solar Horizon)<br>
-        <span style='display:inline-block; width:12px; height:12px; background-color:green; border-radius:50%; margin-right:6px'></span> B : Très bon potentiel solaire (entre 125% et 111%)<br>
-        <span style='display:inline-block; width:12px; height:12px; background-color:lightgreen; border-radius:50%; margin-right:6px'></span> C : Potentiel solaire plus ou moins similaire (entre 104% et 92%)<br>
-        <span style='display:inline-block; width:12px; height:12px; background-color:orange; border-radius:50%; margin-right:6px'></span> D : Potentiel solaire inférieur (entre 91% et 80%)<br>
-        <span style='display:inline-block; width:12px; height:12px; background-color:red; border-radius:50%; margin-right:6px'></span> E : Potentiel solaire nettement inférieur (entre 79% et 70%)
-    </div>
-    """, unsafe_allow_html=True)
+ #   st.markdown("""
+  #  <div style="line-height: 1.8">
+   #     <b>Légende SolarScore :</b><br>
+    #    <span style='display:inline-block; width:12px; height:12px; background-color:darkgreen; border-radius:50%; margin-right:6px'></span> A : Excellent potentiel solaire (entre 137% et 127% de l'énerge produite avec Solar Horizon)<br>
+     #   <span style='display:inline-block; width:12px; height:12px; background-color:green; border-radius:50%; margin-right:6px'></span> B : Très bon potentiel solaire (entre 125% et 111%)<br>
+      #  <span style='display:inline-block; width:12px; height:12px; background-color:lightgreen; border-radius:50%; margin-right:6px'></span> C : Potentiel solaire plus ou moins similaire (entre 104% et 92%)<br>
+       # <span style='display:inline-block; width:12px; height:12px; background-color:orange; border-radius:50%; margin-right:6px'></span> D : Potentiel solaire inférieur (entre 91% et 80%)<br>
+       # <span style='display:inline-block; width:12px; height:12px; background-color:red; border-radius:50%; margin-right:6px'></span> E : Potentiel solaire nettement inférieur (entre 79% et 70%)
+    #</div>
+   # """, unsafe_allow_html=True)
 
-else:
-    st.error("Aucune donnée à afficher")
+#else:
+ #   st.error("Aucune donnée à afficher")
         
 # Bouton de téléchargement
 #csv = dF.to_csv(index=False)
@@ -574,24 +574,24 @@ else:
 
 
 # Informations supplémentaires
-def get_base64_image(path):
-        with open(path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode()
+#def get_base64_image(path):
+ #       with open(path, "rb") as img_file:
+  #          return base64.b64encode(img_file.read()).decode()
 
-info_icon = get_base64_image("images/icones/icone_info.png")
+#info_icon = get_base64_image("images/icones/icone_info.png")
 
-st.markdown("---")
-st.markdown(f"""
-    <div style="display: flex; align-items: center; gap: 40px;">
-        <div> <img src="data:image/png;base64,{info_icon}" width="48"><span style="font-size:20px; font-weight: bold;">Informations</span><br><br>
-            - <b>Source pour les voies vertes :</b> <a href="https://www.af3v.org/" target="_blank">AF3V - Association Française pour le développement des Véloroutes et Voies Vertes</a><br>
-            - <b>Source pour les données météorologiques / solaires :</b> <a href="https://open-meteo.com/en/docs" target="_blank">Open-Meteo - Weather Forecast API</a><br>
-            - <b>Critères :</b> Voies vertes lisses, adaptées au vélo de route et roller<br>
-            - <b>Mise à jour :</b> Données récupérées automatiquement
-</div>""",
-        unsafe_allow_html=True
-    )
-st.markdown("<br><br>", unsafe_allow_html=True)
+#st.markdown("---")
+#st.markdown(f"""
+ #   <div style="display: flex; align-items: center; gap: 40px;">
+  #      <div> <img src="data:image/png;base64,{info_icon}" width="48"><span style="font-size:20px; font-weight: bold;">Informations</span><br><br>
+   #         - <b>Source pour les voies vertes :</b> <a href="https://www.af3v.org/" target="_blank">AF3V - Association Française pour le développement des Véloroutes et Voies Vertes</a><br>
+   #         - <b>Source pour les données météorologiques / solaires :</b> <a href="https://open-meteo.com/en/docs" target="_blank">Open-Meteo - Weather Forecast API</a><br>
+    #        - <b>Critères :</b> Voies vertes lisses, adaptées au vélo de route et roller<br>
+     #       - <b>Mise à jour :</b> Données récupérées automatiquement
+#</div>""",
+ #       unsafe_allow_html=True
+  #  )
+#st.markdown("<br><br>", unsafe_allow_html=True)
 
 #---------------------------------------------------------------------------------------------------------------- #
 #                                                ANALYSES                                                         #
