@@ -54,215 +54,215 @@ st.write("---")
         # --------------------------------------------------------------- #
 
 # URL de base
-url = "https://www.af3v.org/resultats-des-recherches/?stv%5B1%5D=on&sact%5B9%5D=on&sact%5B6%5D=on&ssort=dista"
+#url = "https://www.af3v.org/resultats-des-recherches/?stv%5B1%5D=on&sact%5B9%5D=on&sact%5B6%5D=on&ssort=dista"
 # Tri : voie verte lisse, vélo de route et roller
 
-@st.cache_resource
-def get_session():
-    return requests_cache.CachedSession('.http_cache', expire_after=86400)  # 24h
+#@st.cache_resource
+#def get_session():
+    #return requests_cache.CachedSession('.http_cache', expire_after=86400)  # 24h
 
-@st.cache_data
-def get_basic_fiches():
-    session = get_session()
+#@st.cache_data
+#def get_basic_fiches():
+    #session = get_session()
    
     # Récupération des noms des fiches VV et les liens sur les différentes pages de résultats 
 
-    data = {}
-    index = 0
+    #data = {}
+    #index = 0
 
-    for i in range(0,325,10):
-        link = f"https://www.af3v.org/resultats-des-recherches/?stv%5B1%5D=on&sact%5B9%5D=on&sact%5B6%5D=on&ssort=dista&searchoffs={i}&blockOrLine=0"
+    #for i in range(0,325,10):
+        #link = f"https://www.af3v.org/resultats-des-recherches/?stv%5B1%5D=on&sact%5B9%5D=on&sact%5B6%5D=on&ssort=dista&searchoffs={i}&blockOrLine=0"
 
-        html = session.get(link)
+        #html = session.get(link)
 
         # récupérer le nom, les villes de début et fin et le lien de la fiche
-        if html.status_code == 200:
-            soup = BeautifulSoup(html.text, 'html.parser')
-            cards = [div for div in soup.find_all("div", class_="openSansReg temCom198")] # Pour chaque élément div trouvé dans soup.find_all(...), il est gardé dans une liste.
-            cards_town = [div for div in soup.find_all("div", class_="openSansReg s12w400 coc7c7c7")]
+        #if html.status_code == 200:
+            #soup = BeautifulSoup(html.text, 'html.parser')
+            #cards = [div for div in soup.find_all("div", class_="openSansReg temCom198")] # Pour chaque élément div trouvé dans soup.find_all(...), il est gardé dans une liste.
+            #cards_town = [div for div in soup.find_all("div", class_="openSansReg s12w400 coc7c7c7")]
         
 
-            for card, cardt in zip(cards, cards_town):      # si le nombre de résultats change surtout pour dernière page)
-                var_1 = card.find('a')
-                if var_1:
-                    name = var_1.get_text(strip=True)
-                    link_end = var_1['href']
-                    link_full = "https://www.af3v.org" + link_end
-                    trajet = cardt.get_text(strip=True)
-                    words = re.search(r'De (.+?) à (.+)', trajet)
+            #for card, cardt in zip(cards, cards_town):      # si le nombre de résultats change surtout pour dernière page)
+                #var_1 = card.find('a')
+                #if var_1:
+                    #name = var_1.get_text(strip=True)
+                    #link_end = var_1['href']
+                    #link_full = "https://www.af3v.org" + link_end
+                    #trajet = cardt.get_text(strip=True)
+                    #words = re.search(r'De (.+?) à (.+)', trajet)
                     
 
-                    if words:
-                        start = words.group(1)
-                        end = words.group(2)
+                    #if words:
+                        #"start = words.group(1)
+                        #end = words.group(2)
 
-                        data[index] = { 'Nom': name,
-                                        'Lien': link_full,
-                                        'Début': start,
-                                        'Fin': end}
-                        index += 1
-    return data
+                        #data[index] = { 'Nom': name,
+                                        #'Lien': link_full,
+                                        #'Début': start,
+                                        #'Fin': end}
+                        #index += 1
+    #return data
 
-@st.cache_data
-def get_fiches_characteristics(basic_data):
+#@st.cache_data
+#def get_fiches_characteristics(basic_data):
         # récupérer les autres infos caractéristiques en rentrant dans la fiche
-    session = get_session()
+    #session = get_session()
 
-    data = basic_data.copy()
+    #data = basic_data.copy()
 
-    for i in data:
-        link_fiche = data[i]['Lien']
-        html_fiche = session.get(link_fiche)
+    #for i in data:
+        #link_fiche = data[i]['Lien']
+        #html_fiche = session.get(link_fiche)
 
-        if html_fiche.status_code == 200:
-            soup_fiche = BeautifulSoup(html_fiche.text, 'html.parser')
-            caracteristics_dist = [div for div in soup_fiche.find_all("div", class_="co767676 openSansMed s14w400")]
-            if len(caracteristics_dist) >= 4:
-                distance = caracteristics_dist[0].get_text(strip=True)
-                type_voie = caracteristics_dist[1].get_text(strip=True)
-                nature = caracteristics_dist[2].get_text(strip=True)
-                revetement = caracteristics_dist[3].get_text(strip=True)
-                data[i].update({ 'Distance': distance,
-                            'Type voie': type_voie,
-                            'Nature voie': nature,
-                            'Revêtement': revetement})
-    return data
+        #if html_fiche.status_code == 200:
+            #soup_fiche = BeautifulSoup(html_fiche.text, 'html.parser')
+            #caracteristics_dist = [div for div in soup_fiche.find_all("div", class_="co767676 openSansMed s14w400")]
+            #if len(caracteristics_dist) >= 4:
+                 #distance = caracteristics_dist[0].get_text(strip=True)
+                 #type_voie = caracteristics_dist[1].get_text(strip=True)
+                 #nature = caracteristics_dist[2].get_text(strip=True)
+                 #revetement = caracteristics_dist[3].get_text(strip=True)
+                 #data[i].update({ 'Distance': distance,
+                             #'Type voie': type_voie,
+                             #'Nature voie': nature,
+                             #'Revêtement': revetement})
+     #return data
 
-@st.cache_data
-def get_fiches_coordinates(data_with_chars):    
+ #@st.cache_data
+ #def get_fiches_coordinates(data_with_chars):    
 
     #print("🗺️  Récupération des coordonnées...")
 
-    session = get_session()
+     #session = get_session()
 
-    data = data_with_chars.copy()
+     #data = data_with_chars.copy()
 
-    for i in data:
-        link_fiche = data[i]['Lien']
-        html_fiche = session.get(link_fiche)
+    #for i in data:
+         #link_fiche = data[i]['Lien']
+         #html_fiche = session.get(link_fiche)
 
-        if html_fiche.status_code == 200:
-            soup_fiche = BeautifulSoup(html_fiche.text, 'html.parser')
-            car_map = [div for div in soup_fiche.find_all("iframe", id="carte_voies")]
-            for map in car_map:
-                carte = map["data-url"]
-                coords_all = re.search(r'(?<=bbox=)[^&]*', carte) # cherche tout ce qui est après = et avant &
-                if coords_all:
-                    coords_str = coords_all.group() # récupérer la str extraite
-                    coords = coords_str.split(',') # séparer par ,
-                    coord_start = (coords[0], coords[1])
-                    coord_end = (coords[2], coords[3])
-                    data[i].update({ 'Carte': carte,
-                                    'Coordonnées de début': coord_start,
-                                    'Coordonnées de fin': coord_end})                        
+         #if html_fiche.status_code == 200:
+             #soup_fiche = BeautifulSoup(html_fiche.text, 'html.parser')
+             #car_map = [div for div in soup_fiche.find_all("iframe", id="carte_voies")]
+             #for map in car_map:
+                 #carte = map["data-url"]
+                 #coords_all = re.search(r'(?<=bbox=)[^&]*', carte) # cherche tout ce qui est après = et avant &
+                # if coords_all:
+                     #coords_str = coords_all.group() # récupérer la str extraite
+                     #coords = coords_str.split(',') # séparer par ,
+                     #coord_start = (coords[0], coords[1])
+                     #coord_end = (coords[2], coords[3])
+                     #data[i].update({ 'Carte': carte,
+                                     #'Coordonnées de début': coord_start,
+                                     #'Coordonnées de fin': coord_end})                        
 
-    return data
+    #return data
 
-@st.cache_data                   
-def scraping():
+ #@st.cache_data                   
+ #def scraping():
     
     # Étape 1
-    progress_bar = st.progress(0)
-    status_text = st.empty()
+     #progress_bar = st.progress(0)
+     #status_text = st.empty()
     
-    status_text.text("Récupération des fiches de base...")
-    basic_data = get_basic_fiches()
-    progress_bar.progress(33)
+     #status_text.text("Récupération des fiches de base...")
+     #basic_data = get_basic_fiches()
+     #progress_bar.progress(33)
     
     # Étape 2
-    status_text.text("Ajout des caractéristiques...")
-    data_with_chars = get_fiches_characteristics(basic_data)
-    progress_bar.progress(66)
+     #status_text.text("Ajout des caractéristiques...")
+     #data_with_chars = get_fiches_characteristics(basic_data)
+     #progress_bar.progress(66)
     
     # Étape 3
-    status_text.text("Ajout des coordonnées...")
-    final_data = get_fiches_coordinates(data_with_chars)
-    progress_bar.progress(100)
+     #status_text.text("Ajout des coordonnées...")
+     #final_data = get_fiches_coordinates(data_with_chars)
+     #progress_bar.progress(100)
     
-    status_text.text(f"L'attente est finie : {len(final_data)} fiches viennent d'être récupérées sur le site de l'Association Française pour le développement des Véloroutes et Voies Vertes.")
-    return final_data
+     #status_text.text(f"L'attente est finie : {len(final_data)} fiches viennent d'être récupérées sur le site de l'Association Française pour le développement des Véloroutes et Voies Vertes.")
+     #return final_data
 
-data = scraping()
+ #data = scraping()
 
-@st.cache_data()
-def convert_en_df(data):
-    df = pd.DataFrame.from_dict(data, orient='index')
+ #@st.cache_data()
+ #def convert_en_df(data):
+     #df = pd.DataFrame.from_dict(data, orient='index')
 
-    def midpoint(lat1, lon1, lat2, lon2):
-        mid_lat = (lat1 + lat2) / 2
-        mid_lon = (lon1 + lon2) / 2
-        return mid_lat, mid_lon
+     #def midpoint(lat1, lon1, lat2, lon2):
+        #mid_lat = (lat1 + lat2) / 2
+         #mid_lon = (lon1 + lon2) / 2
+         #return mid_lat, mid_lon
 
-    def calculate_midpoint_voie_verte(row):
-        try:
-            coord_debut = row['Coordonnées de début']
-            coord_fin = row['Coordonnées de fin']
+     #def calculate_midpoint_voie_verte(row):
+         #try:
+             #coord_debut = row['Coordonnées de début']
+             #coord_fin = row['Coordonnées de fin']
             
             # Convertir selon le type
-            if isinstance(coord_debut, str):
-                coord_debut = coord_debut.strip('()')
-                lat_debut, lon_debut = map(float, coord_debut.split(','))
-            else:
-                lat_debut, lon_debut = float(coord_debut[0]), float(coord_debut[1])
+            # if isinstance(coord_debut, str):
+                 #coord_debut = coord_debut.strip('()')
+                 #lat_debut, lon_debut = map(float, coord_debut.split(','))
+             #else:
+                 #lat_debut, lon_debut = float(coord_debut[0]), float(coord_debut[1])
             
-            if isinstance(coord_fin, str):
-                coord_fin = coord_fin.strip('()')
-                lat_fin, lon_fin = map(float, coord_fin.split(','))
-            else:
-                lat_fin, lon_fin = float(coord_fin[0]), float(coord_fin[1])
+             #if isinstance(coord_fin, str):
+                # coord_fin = coord_fin.strip('()')
+                # lat_fin, lon_fin = map(float, coord_fin.split(','))
+            # else:
+                # lat_fin, lon_fin = float(coord_fin[0]), float(coord_fin[1])
             
-            return midpoint(lat_debut, lon_debut, lat_fin, lon_fin)
-        except Exception as e:
-            print(f"Erreur: {e}")
-            return None
+            # return midpoint(lat_debut, lon_debut, lat_fin, lon_fin)
+        # except Exception as e:
+            # print(f"Erreur: {e}")
+            # return None
     
-    df['Coordonnées milieu'] = df.apply(calculate_midpoint_voie_verte, axis=1)
+  #  df['Coordonnées milieu'] = df.apply(calculate_midpoint_voie_verte, axis=1)
 
-    def safe_literal_eval(val):
-        if isinstance(val, str):
-            try:
-                return ast.literal_eval(val)
-            except Exception as e:
-                print(f"Erreur pour la valeur {val}: {e}")
-                return None
-        else:
-            return val  # déjà un tuple ou autre type valide
+    # def safe_literal_eval(val):
+       #  if isinstance(val, str):
+          #   try:
+              #   return ast.literal_eval(val)
+           #  except Exception as e:
+              #   print(f"Erreur pour la valeur {val}: {e}")
+              #   return None
+      #   else:
+           #  return val  # déjà un tuple ou autre type valide
     
-    df["Coordonnées milieu"] = df["Coordonnées milieu"].apply(safe_literal_eval)
-    df["Coordonnées de début"] = df["Coordonnées de début"].apply(safe_literal_eval)
-    df["Coordonnées de fin"] = df["Coordonnées de fin"].apply(safe_literal_eval)
-    df['Distance'] = df['Distance'].str.replace('km', '', regex=False).str.replace(',', '.').astype(float)
-    df['Début'] = df['Début'].str.capitalize()
-    df['Fin'] = df['Fin'].str.capitalize()
-    df['% Couverture correspondant (200m)'] = round((200 / (df['Distance'] * 1000) * 100),2)
+   #  df["Coordonnées milieu"] = df["Coordonnées milieu"].apply(safe_literal_eval)
+   #  df["Coordonnées de début"] = df["Coordonnées de début"].apply(safe_literal_eval)
+  #   df["Coordonnées de fin"] = df["Coordonnées de fin"].apply(safe_literal_eval)
+    # df['Distance'] = df['Distance'].str.replace('km', '', regex=False).str.replace(',', '.').astype(float)
+ #    df['Début'] = df['Début'].str.capitalize()
+   #  df['Fin'] = df['Fin'].str.capitalize()
+ #  df['% Couverture correspondant (200m)'] = round((200 / (df['Distance'] * 1000) * 100),2)
 
-    return df
+   #  return df
 
-df = convert_en_df(data)
+ #df = convert_en_df(data)
 
-@st.cache_data()
-def categorize_nature(voie) -> str :
-    voie = str(voie).lower()
-    if 'rivière' in voie or 'canal' in voie or 'chemin de halage' in voie:
-        return 'Bord de rivière ou canal'
-    elif 'sentier' in voie or 'chemin' in voie:
-        return 'Bord de sentier'
-    elif 'route' in voie:
-        return 'Bord de route'
-    elif 'piste' in voie:
-        return 'Piste cyclable'
-    elif 'chemin de halage' in voie:
-        return 'Chemin de halage'
-    elif 'ancienne' in voie:
-        return 'Ancienne ligne ferrovière'
-    elif 'verte' in voie:
-        return 'Voie verte'
-    elif 'ferrée'in voie:
-        return 'Bord de voie ferrée'
-    else:
-        return 'Voie verte'
+ #@st.cache_data()
+ #def categorize_nature(voie) -> str :
+  #   voie = str(voie).lower()
+   #  if 'rivière' in voie or 'canal' in voie or 'chemin de halage' in voie:
+     #  return 'Bord de rivière ou canal'
+  #   elif 'sentier' in voie or 'chemin' in voie:
+      #   return 'Bord de sentier'
+ #    elif 'route' in voie:
+     #    return 'Bord de route'
+   #  elif 'piste' in voie:
+   #      return 'Piste cyclable'
+ #    elif 'chemin de halage' in voie:
+    #     return 'Chemin de halage'
+   #  elif 'ancienne' in voie:
+   #      return 'Ancienne ligne ferrovière'
+    # elif 'verte' in voie:
+      #   return 'Voie verte'
+ #    elif 'ferrée'in voie:
+    #     return 'Bord de voie ferrée'
+ #    else:
+      #   return 'Voie verte'
     
-df['Groupes nature voie'] = df['Nature voie'].apply(categorize_nature)
+ #df['Groupes nature voie'] = df['Nature voie'].apply(categorize_nature)
 
 
 
