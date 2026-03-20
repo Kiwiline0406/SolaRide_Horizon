@@ -2,8 +2,8 @@ name: Wake up Apps
 
 on:
   schedule:
-    - cron: '0 8 * * *' # Tous les jours à 8h UTC
-  workflow_dispatch:   # Pour pouvoir cliquer sur "Run workflow" manuellement
+    - cron: '0 8 * * *'
+  workflow_dispatch:
 
 jobs:
   ping:
@@ -11,5 +11,5 @@ jobs:
     steps:
       - name: Send requests
         run: |
-          curl -L https://solaridehorizon.streamlit.app/
-          curl -L https://creuse-cine-plus.streamlit.app/
+          curl -I https://solaridehorizon.streamlit.app/
+          curl -I https://creuse-cine-plus.streamlit.app/
