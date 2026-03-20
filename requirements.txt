@@ -993,18 +993,8 @@ tzdata==2025.2 \
     # via pandas
 url-normalize==2.2.1 \
     --hash=sha256:3deb687587dc91f7b25c9ae5162ffc0f057ae85d22b1e15cf5698311247f567b \
-    --hash=sha256:74a540a3b6eba1d95bdc610c24f2c0141639f3ba903501e61a52a8730247ff37
-    # via requests-cache
-urllib3==2.5.0 \
-    --hash=sha256:3fc47733c7e419d4bc3f6b3dc2b4f890bb743906a30d56ba4a5bfa4bbff92760 \
-    --hash=sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc
-    # via
-    #   requests
-    #   requests-cache
-    #   retry-requests
-urllib3-future==2.13.900 \
-    --hash=sha256:1d897573a7aeec55654abb7d8f1ffc3d7017d6d49ab5d74fbc3548ed1078e0ed \
-    --hash=sha256:71e27a10449848afba45d15fb7ebc1286c4086ed79a0229725413408d2e220c0
+    --hash=sha256:74a540a3b6eba1d95bdc610c24f2c0141639f3ba903501e61a52a8730247ff3
+urllib3<2.0.0
     # via niquests
 wassima==1.2.2 \
     --hash=sha256:18bc78b2230c6f1f9ddbeb6ca38439fea4cc8f60836af4f3538ed259e60e5eb8 \
