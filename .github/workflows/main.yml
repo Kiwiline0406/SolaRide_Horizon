@@ -1,1 +1,15 @@
+name: Wake up Apps
 
+on:
+  schedule:
+    - cron: '0 8 * * *' # Tous les jours à 8h UTC
+  workflow_dispatch:   # Pour pouvoir cliquer sur "Run workflow" manuellement
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send requests
+        run: |
+          curl -L https://solaridehorizon.streamlit.app/
+          curl -L https://creuse-cine-plus.streamlit.app/
