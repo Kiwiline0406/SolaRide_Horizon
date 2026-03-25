@@ -2,7 +2,7 @@ name: Wake up Apps
 
 on:
   schedule:
-    - cron: '0 8 * * *'
+    - cron: '0 8,20 * * *' # Tourne à 8h et 20h pour être sûre
   workflow_dispatch:
 
 jobs:
@@ -11,5 +11,5 @@ jobs:
     steps:
       - name: Send requests
         run: |
-          curl -I https://solaridehorizon.streamlit.app/
-          curl -I https://creuse-cine-plus.streamlit.app/
+          curl -L --user-agent "Mozilla/5.0" https://solaridehorizon.streamlit.app/
+          curl -L --user-agent "Mozilla/5.0" https://creusecineplus.streamlit.app/
