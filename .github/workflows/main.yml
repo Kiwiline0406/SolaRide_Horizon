@@ -9,7 +9,7 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Send requests
+      - name: Wake up apps
         run: |
-          curl -L --user-agent "Mozilla/5.0" https://solaridehorizon.streamlit.app/
-          curl -L --user-agent "Mozilla/5.0" https://creusecineplus.streamlit.app/
+          wget --spider --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" https://solaridehorizon.streamlit.app/
+          wget --spider --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" https://creusecineplus.streamlit.app/
